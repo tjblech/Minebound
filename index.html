@@ -606,6 +606,150 @@
       .statusbar{margin-top:4px}
     }
 
+  
+    /* v1.2: softer "modern indie game inspired by Win98" pass */
+    :root{
+      --desktop:#3f8582;
+      --win:#d2d0c8;
+      --win-light:#f5f3ec;
+      --win-mid:#dfddd5;
+      --win-dark:#85847f;
+      --blue:#173d78;
+      --blue2:#3a79ad;
+      --counter:#ff5148;
+      --counter-bg:#121416;
+    }
+    html,body{
+      background:
+        radial-gradient(circle at 28% 8%,rgba(255,255,255,.11),transparent 24%),
+        linear-gradient(180deg,#438987,#397a78);
+      font-family:Tahoma,system-ui,-apple-system,"Segoe UI",sans-serif;
+    }
+    .app{
+      width:min(900px,calc(100% - 14px));
+      margin:10px auto 70px;
+      border-width:1px;
+      border-radius:5px;
+      overflow:hidden;
+      box-shadow:0 10px 28px rgba(0,0,0,.22);
+    }
+    .top{
+      height:32px;
+      margin-bottom:5px;
+      background:linear-gradient(90deg,#173d78,#397bad);
+    }
+    .window-controls i{
+      border-width:1px;
+      border-radius:2px;
+      opacity:.92;
+    }
+    .card,.game-window,.win-dialog,.draftbox{
+      border-width:1px!important;
+      border-radius:4px;
+      box-shadow:0 3px 9px rgba(0,0,0,.10);
+    }
+    .mine-hud{
+      background:#c8c7c0;
+      border-width:1px;
+      padding:6px 8px;
+    }
+    .led-box{
+      border-width:1px!important;
+      border-radius:3px;
+      min-width:78px;
+    }
+    .face-btn,.mini,.primary,.tab{
+      border-width:1px!important;
+      border-radius:3px;
+    }
+    .board-wrap{
+      border-width:2px;
+      padding:7px;
+      background:#c7c6c0;
+    }
+    .cell{
+      border-top-width:2px;border-left-width:2px;border-right-width:2px;border-bottom-width:2px;
+      width:31px;height:31px;
+    }
+    .game-menubar{
+      background:#deddd6;
+      border-bottom:1px solid #9c9b95;
+      padding:5px 7px;
+    }
+    .tabs{
+      background:rgba(210,208,200,.97);
+      backdrop-filter:blur(8px);
+      padding:5px 7px calc(5px + env(safe-area-inset-bottom));
+      gap:5px;
+    }
+    .tabs:before{display:none}
+    .tab{
+      text-align:center;
+      flex:1;
+      max-width:180px;
+      padding:7px 8px;
+      border-radius:4px;
+    }
+    .tab.active{
+      background:#f0eee8;
+      color:#173d78;
+      box-shadow:inset 0 -2px 0 #3a79ad;
+    }
+    .section-title{font-weight:600}
+    .statusbar{
+      background:#deddd7;
+      border-top:1px solid #989792;
+      color:#333;
+    }
+    .modifier{
+      background:#f3e8c9;
+      border-color:#a98942;
+      border-radius:3px;
+      box-shadow:none;
+    }
+    .perk,.upgrade,.draftchoice{
+      border-width:1px;
+      border-radius:4px;
+      background:#deddd7;
+    }
+    .perk.selected{
+      background:#315f92;
+      color:#fff;
+    }
+    .draftchoice{
+      padding-top:10px;
+      min-height:112px;
+    }
+    .perk-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      color:#555;
+      font-size:9px;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      margin-bottom:5px;
+    }
+    .rarity-tag{font-weight:bold}
+    .rarity-common .rarity-tag{color:#4d6652}
+    .rarity-uncommon{border-left:3px solid #3f7695!important}
+    .rarity-uncommon .rarity-tag{color:#2f6383}
+    .rarity-rare{border-left:3px solid #76549b!important}
+    .rarity-rare .rarity-tag{color:#67438c}
+    .draftbox:before{border-radius:3px 3px 0 0}
+    .currency{
+      border-width:1px;
+      border-radius:3px;
+      min-width:86px;
+    }
+    @media(max-width:690px){
+      .app{margin-top:5px}
+      .cell{width:32px;height:32px}
+      .game-toolbar{gap:5px}
+      .mine-legend{font-size:9px;opacity:.78}
+      .statusbar{font-size:10px}
+    }
+
   </style>
 
 
@@ -691,7 +835,7 @@
 
       <div class="statusbar">
         <span id="runNotice">Ready.</span>
-        <span>Floor <b id="floorStat">1</b> · Echoes <b id="runEchoStat">0</b> · Marks <b id="markCount">0</b> · <span id="safeLeftLabel">0</span> safe left</span>
+        <span>Floor <b id="floorStat">1</b> · Echoes <b id="runEchoStat">0</b> · Caches <b id="cacheCount">0</b> · Marks <b id="markCount">0</b></span>
       </div>
       <span id="sizeLabel" class="hidden"></span>
       <span id="minesLabel" class="hidden"></span>
@@ -775,8 +919,8 @@
 
 <div id="draftOverlay" class="draft">
   <div class="draftbox card">
-    <h2>MINEBOUND found new hardware</h2>
-    <p>Choose one module to install for the current run.</p>
+    <h2>Choose Run Upgrade</h2>
+    <p>Pick one. It lasts for this run and can be upgraded if it appears again.</p>
     <div class="draftchoices" id="draftChoices"></div>
     <button class="mini hidden" id="rerollBtn" style="width:100%;margin-top:10px">Refresh List (<span id="rerollCount">0</span>)</button>
   </div>
@@ -792,18 +936,22 @@ const STARTERS=[
 ];
 
 const PERKS=[
-  {id:"foam",emoji:"F",name:"Defusal Foam",desc:"The first mine you hit on each floor deals no damage."},
-  {id:"cascade",emoji:"C",name:"Cascade",desc:"The first zero you reveal each floor also opens 2 random safe tiles."},
-  {id:"adrenaline",emoji:"!",name:"Adrenaline",desc:"After taking mine damage, reveal 3 random safe tiles."},
-  {id:"bounty",emoji:"B",name:"Clean Sweep",desc:"Flawless floor clears award +35% Echoes."},
-  {id:"sight",emoji:"?",name:"Echo Sight",desc:"Every 10 safe tiles opened, mark a guaranteed safe tile with a glow."},
-  {id:"marked",emoji:"M",name:"Inside Information",desc:"Each new floor begins with 1 mine correctly flagged."},
-  {id:"medic",emoji:"+",name:"Reconstructor",desc:"Heal 1 Integrity after every 3 floors you clear."},
-  {id:"jackpot",emoji:"2x",name:"Resonance",desc:"20% chance for any cleared floor to pay double Echoes."},
-  {id:"momentum",emoji:">>",name:"Momentum",desc:"Each consecutive flawless clear adds +10% reward, up to +50%."},
-  {id:"salvage",emoji:"$",name:"Scrap Magnet",desc:"+15% Echoes from every floor for the rest of this run."},
-  {id:"shield",emoji:"S",name:"Reactive Plating",desc:"Every 4th floor cleared grants a one-hit shield for the next floor."},
-  {id:"scanner",emoji:"SC",name:"Deep Scan",desc:"Every floor starts with +1 Scan charge."}
+  {id:"luckyprobe",emoji:"LP",name:"Lucky Probe",rarity:"common",max:3,desc:"Each safe tile you manually open has a 7% chance per rank to reveal 1 extra random safe tile."},
+  {id:"autosweep",emoji:"AS",name:"Auto-Sweep",rarity:"common",max:2,desc:"Every 8 manual safe opens, reveal 1 random safe tile. At rank 2, triggers every 6."},
+  {id:"cascade",emoji:"C",name:"Cascade",rarity:"common",max:2,desc:"The first zero opened each floor reveals 2 extra safe tiles per rank."},
+  {id:"scavenger",emoji:"$",name:"Loose Change",rarity:"common",max:3,desc:"Safe tiles have a 6% chance per rank to immediately award 1–3 Run Echoes."},
+  {id:"sight",emoji:"?",name:"Echo Sight",rarity:"common",max:2,desc:"Every 10 safe tiles opened highlights a guaranteed safe tile. Rank 2 triggers every 7."},
+  {id:"freescans",emoji:"SC",name:"Recycled Charge",rarity:"uncommon",max:2,desc:"Scans have a 25% chance per rank to not consume a charge."},
+  {id:"flagpulse",emoji:"FP",name:"Flag Pulse",rarity:"uncommon",max:2,desc:"Correctly marking a mine has a 20% chance per rank to reveal a random safe tile."},
+  {id:"cluebreaker",emoji:"4+",name:"Clue Breaker",rarity:"uncommon",max:2,desc:"The first 4+ clue you open each floor reveals 2 extra safe tiles per rank."},
+  {id:"foam",emoji:"F",name:"Defusal Foam",rarity:"uncommon",max:1,desc:"The first mine you hit on each floor deals no Integrity damage."},
+  {id:"adrenaline",emoji:"!",name:"Adrenaline",rarity:"uncommon",max:2,desc:"After taking mine damage, reveal 2 random safe tiles per rank."},
+  {id:"secondchance",emoji:"%",name:"Fault Tolerance",rarity:"rare",max:2,desc:"Any damaging mine hit has a 20% chance per rank to be completely ignored."},
+  {id:"medic",emoji:"+",name:"Field Repair",rarity:"rare",max:2,desc:"After every 3 cleared floors, heal 1 Integrity per rank, up to max."},
+  {id:"jackpot",emoji:"2X",name:"Resonance",rarity:"rare",max:2,desc:"Clearing a floor has a 15% chance per rank to double that floor's Echo reward."},
+  {id:"momentum",emoji:">>",name:"Momentum",rarity:"rare",max:2,desc:"Each consecutive flawless clear adds +10% reward per rank, up to +60%."},
+  {id:"shield",emoji:"S",name:"Reactive Plating",rarity:"rare",max:2,desc:"Every 4th floor cleared grants 1 mine-blocking shield per rank."},
+  {id:"scanner",emoji:"BAT",name:"Deep Scanner",rarity:"rare",max:2,desc:"Every new floor starts with +1 Scan charge per rank."}
 ];
 
 const UPGRADES=[
@@ -839,6 +987,31 @@ function upgradeCost(u){
 }
 function hasPerk(id){return meta.run && meta.run.perks.some(p=>p.id===id)}
 function perkCount(id){return meta.run?meta.run.perks.filter(p=>p.id===id).length:0}
+function perkRank(id){return perkCount(id)}
+function setRunNotice(msg,log=true){
+  if(!meta.run)return;
+  meta.run.notice=msg;
+  if(log&&msg)meta.run.log.unshift(msg);
+}
+function roll(chance){return Math.random()<Math.max(0,Math.min(.95,chance))}
+function randomEchoDrop(rank=1){
+  return 1+randInt(2+Math.min(2,rank));
+}
+function availablePerks(){
+  return PERKS.filter(p=>perkRank(p.id)<(p.max||1));
+}
+function weightedPerkPick(pool,count=3){
+  const weights={common:60,uncommon:32,rare:14};
+  const result=[], remaining=[...pool];
+  while(result.length<count&&remaining.length){
+    const total=remaining.reduce((s,p)=>s+(weights[p.rarity]||30),0);
+    let n=Math.random()*total,chosen=remaining[0];
+    for(const p of remaining){n-=weights[p.rarity]||30;if(n<=0){chosen=p;break}}
+    result.push(chosen);
+    remaining.splice(remaining.indexOf(chosen),1);
+  }
+  return result;
+}
 
 function showScreen(id){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
@@ -885,7 +1058,8 @@ function startRun(){
   meta.run={
     floor:1,hp:maxHp,maxHp:maxHp,runEchoes:0,perks:[],starter,
     rerolls:starter==="tactician"?2:0,flawlessStreak:0,
-    board:null,ended:false,log:["MINEBOUND.EXE started."],shield:0
+    board:null,ended:false,log:["MINEBOUND.EXE started."],shield:0,
+    manualSafeOpens:0,depthCaches:0,notice:""
   };
   newFloor();
   save();showScreen("runScreen");
@@ -916,9 +1090,9 @@ function newFloor(){
   r.board={
     rows:spec.rows,cols:spec.cols,mines,
     generated:false,cells:[],opened:0,flags:0,
-    scans:1+(meta.upgrades.battery||0)+(hasPerk("scanner")?1:0),
+    scans:1+(meta.upgrades.battery||0)+perkCount("scanner"),
     floorHit:false,foamUsed:false,zeroCascadeUsed:false,hintIndex:null,
-    mod:mod?mod.id:null
+    clueBreakerUsed:false, mod:mod?mod.id:null
   };
   for(let i=0;i<spec.rows*spec.cols;i++)r.board.cells.push({mine:false,n:0,open:false,flag:false});
   r.log.unshift(`Entered floor ${r.floor}${mod?` — ${mod.name}`:""}.`);
@@ -1018,8 +1192,54 @@ function reveal(idx,manual=true){
   if(!b.generated)generateBoard(idx);
   const c=b.cells[idx];
   if(c.mine){hitMine(idx);return}
+
+  r.notice="";
+  const before=b.opened;
   floodOpen(idx);
-  if(manual && hasPerk("sight") && b.opened>0 && b.opened%10===0)markSafeHint();
+  const openedNow=Math.max(1,b.opened-before);
+
+  if(manual){
+    r.manualSafeOpens++;
+
+    // Lucky Probe: low chance on every manual safe click.
+    const luckyRank=perkRank("luckyprobe");
+    if(luckyRank&&roll(.07*luckyRank)&&openRandomSafe(false)){
+      setRunNotice(`Lucky Probe pinged: +1 safe tile.`);
+    }
+
+    // Auto-Sweep: deterministic mini-payoff after enough manual clicks.
+    const autoRank=perkRank("autosweep");
+    const cadence=autoRank>=2?6:8;
+    if(autoRank&&r.manualSafeOpens%cadence===0&&openRandomSafe(false)){
+      setRunNotice(`Auto-Sweep triggered after ${cadence} opens.`);
+    }
+
+    // Loose Change: tiny instant rewards during the actual board.
+    const scavRank=perkRank("scavenger");
+    if(scavRank&&roll(.06*scavRank)){
+      const gain=randomEchoDrop(scavRank);
+      r.runEchoes+=gain;
+      setRunNotice(`Loose Change found +${gain} Echo${gain===1?"":"es"}.`);
+    }
+
+    // Echo Sight.
+    const sightRank=perkRank("sight");
+    const sightCadence=sightRank>=2?7:10;
+    if(sightRank&&r.manualSafeOpens%sightCadence===0){
+      markSafeHint();
+      setRunNotice(`Echo Sight marked a safe tile.`);
+    }
+
+    // Clue Breaker: rewards hitting intimidating high clues.
+    const breakerRank=perkRank("cluebreaker");
+    if(breakerRank&&!b.clueBreakerUsed&&c.n>=4){
+      b.clueBreakerUsed=true;
+      let opened=0;
+      for(let i=0;i<2*breakerRank;i++)if(openRandomSafe(false))opened++;
+      if(opened)setRunNotice(`Clue Breaker opened ${opened} safe tile${opened===1?"":"s"}.`);
+    }
+  }
+
   checkClear();
   save();renderAll();
 }
@@ -1030,8 +1250,12 @@ function floodOpen(start){
     const c=b.cells[idx];if(c.open||c.flag||c.mine)continue;
     c.open=true;b.opened++;
     if(c.n===0){
-      if(hasPerk("cascade")&&!b.zeroCascadeUsed){
-        b.zeroCascadeUsed=true;openRandomSafe(false);openRandomSafe(false);
+      const cascadeRank=perkRank("cascade");
+      if(cascadeRank&&!b.zeroCascadeUsed){
+        b.zeroCascadeUsed=true;
+        let extra=0;
+        for(let k=0;k<2*cascadeRank;k++)if(openRandomSafe(false))extra++;
+        if(extra)setRunNotice(`Cascade opened ${extra} extra safe tile${extra===1?"":"s"}.`);
       }
       neighbors(idx).forEach(n=>{const x=b.cells[n];if(!x.open&&!x.flag&&!x.mine)q.push(n)});
     }
@@ -1043,11 +1267,25 @@ function hitMine(idx){
   let dmg=1;
   const mod=currentModifier();if(mod&&mod.id==="fragile")dmg=2;
 
-  if(hasPerk("foam")&&!b.foamUsed){b.foamUsed=true;dmg=0;r.log.unshift("Defusal Foam absorbed a mine hit.");}
-  else if(r.shield>0){r.shield--;dmg=0;r.log.unshift("Reactive Plating absorbed a mine hit.");}
+  if(hasPerk("foam")&&!b.foamUsed){
+    b.foamUsed=true;dmg=0;setRunNotice("Defusal Foam absorbed the mine.");
+  }else if(r.shield>0){
+    r.shield--;dmg=0;setRunNotice("Reactive Plating absorbed the mine.");
+  }else{
+    const toleranceRank=perkRank("secondchance");
+    if(toleranceRank&&roll(.20*toleranceRank)){
+      dmg=0;setRunNotice("Fault Tolerance ignored the mine hit.");
+    }
+  }
+
   if(dmg>0){
-    r.hp-=dmg;r.log.unshift(`Mine hit: -${dmg} Integrity.`);
-    if(hasPerk("adrenaline")){openRandomSafe(false);openRandomSafe(false);openRandomSafe(false);}
+    r.hp-=dmg;setRunNotice(`Mine hit: -${dmg} Integrity.`);
+    const adrRank=perkRank("adrenaline");
+    if(adrRank){
+      let opened=0;
+      for(let i=0;i<2*adrRank;i++)if(openRandomSafe(false))opened++;
+      if(opened)setRunNotice(`Adrenaline exposed ${opened} safe tile${opened===1?"":"s"}.`);
+    }
   }
   if(navigator.vibrate)navigator.vibrate([45,35,70]);
   if(r.hp<=0){endRun("Hull failure.");return}
@@ -1057,7 +1295,14 @@ function toggleMark(idx){
   const b=meta.run.board;if(!b.generated)return;
   const mod=currentModifier();if(mod&&mod.id==="noflags")return;
   const c=b.cells[idx];if(c.open)return;
-  c.flag=!c.flag;b.flags+=c.flag?1:-1;save();renderAll();
+  c.flag=!c.flag;b.flags+=c.flag?1:-1;
+
+  const pulseRank=perkRank("flagpulse");
+  if(c.flag&&c.mine&&pulseRank&&roll(.20*pulseRank)&&openRandomSafe(false)){
+    setRunNotice("Flag Pulse confirmed the mark and opened a safe tile.");
+    checkClear();
+  }
+  save();renderAll();
 }
 function openRandomSafe(check=true){
   const b=meta.run.board;
@@ -1076,54 +1321,107 @@ function markSafeHint(){
 }
 function useScan(){
   const b=meta.run.board;if(!b||!b.generated||b.scans<=0)return;
-  if(openRandomSafe()){b.scans--;meta.run.log.unshift("SCAN.EXE located a safe tile.");save();renderAll()}
+  if(openRandomSafe()){
+    const rank=perkRank("freescans");
+    const recycled=rank&&roll(.25*rank);
+    if(!recycled)b.scans--;
+    setRunNotice(recycled?"Recycled Charge: scan was free.":"Scanner revealed a safe tile.");
+    save();renderAll();
+  }
 }
 function floorReward(){
   const r=meta.run,b=r.board;
-  let base=8+r.floor*4+Math.floor(b.mines*.8);
+  let base=12+r.floor*5+Math.floor(b.mines*1.15);
   let mult=1+(meta.upgrades.pouch||0)*.10;
   if(r.starter==="lucky")mult+=.20;
-  if(hasPerk("salvage"))mult+=.15*perkCount("salvage");
-  if(!b.floorHit&&hasPerk("bounty"))mult+=.35;
-  if(!b.floorHit&&hasPerk("momentum"))mult+=Math.min(.5,r.flawlessStreak*.10);
+
+  const momentumRank=perkRank("momentum");
+  if(!b.floorHit&&momentumRank)mult+=Math.min(.60,r.flawlessStreak*.10*momentumRank);
+
   const mod=currentModifier();if(mod)mult*=mod.reward;
-  if(hasPerk("jackpot")&&Math.random()<.20)mult*=2;
+
+  const jackpotRank=perkRank("jackpot");
+  if(jackpotRank&&roll(.15*jackpotRank)){
+    mult*=2;
+    setRunNotice("Resonance hit: floor reward doubled.");
+  }
   return Math.max(1,Math.floor(base*mult));
+}
+
+function awardDepthCache(clearedFloor){
+  const r=meta.run;
+  const bonus=20+clearedFloor*4;
+  r.runEchoes+=bonus;
+  r.depthCaches=(r.depthCaches||0)+1;
+  r.rerolls=(r.rerolls||0)+1;
+  let repaired=false;
+  if(r.hp<r.maxHp){r.hp++;repaired=true}
+  setRunNotice(`DEPTH CACHE: +${bonus} Echoes, +1 reroll${repaired?", +1 Integrity":""}.`);
 }
 function checkClear(){
   const r=meta.run,b=r.board;
   const safeTotal=b.cells.length-b.mines;
   if(b.opened<safeTotal)return;
+
+  const clearedFloor=r.floor;
   const flawless=!b.floorHit;
   r.flawlessStreak=flawless?r.flawlessStreak+1:0;
-  const reward=floorReward();
-  r.runEchoes+=reward;meta.totalClears++;meta.bestFloor=Math.max(meta.bestFloor,r.floor);
-  r.log.unshift(`Floor ${r.floor} cleared${flawless?" flawlessly":""}: +${reward} Echoes.`);
 
-  if(hasPerk("medic")&&r.floor%3===0&&r.hp<r.maxHp){r.hp++;r.log.unshift("Reconstructor restored 1 Integrity.");}
-  if(hasPerk("shield")&&r.floor%4===0){r.shield++;r.log.unshift("Reactive Plating charged a shield.");}
+  const reward=floorReward();
+  r.runEchoes+=reward;meta.totalClears++;meta.bestFloor=Math.max(meta.bestFloor,clearedFloor);
+  r.log.unshift(`Floor ${clearedFloor} cleared${flawless?" flawlessly":""}: +${reward} Echoes.`);
+
+  const medicRank=perkRank("medic");
+  if(medicRank&&clearedFloor%3===0&&r.hp<r.maxHp){
+    const heal=Math.min(medicRank,r.maxHp-r.hp);
+    r.hp+=heal;
+    setRunNotice(`Field Repair restored ${heal} Integrity.`);
+  }
+
+  const shieldRank=perkRank("shield");
+  if(shieldRank&&clearedFloor%4===0){
+    r.shield+=shieldRank;
+    setRunNotice(`Reactive Plating gained ${shieldRank} shield${shieldRank===1?"":"s"}.`);
+  }
+
+  // Every fifth cleared floor pays out a real milestone prize.
+  if(clearedFloor%5===0)awardDepthCache(clearedFloor);
 
   r.floor++;
-  if((r.floor-1)%3===0)showDraft();
+  // Faster perk cadence: the build should visibly evolve during a run.
+  if(clearedFloor%2===0)showDraft();
   else newFloor();
 }
 function showDraft(){
-  const r=meta.run;
-  const picks=shuffle(PERKS).slice(0,3);
+  const picks=weightedPerkPick(availablePerks(),3);
+  if(!picks.length){newFloor();return}
   renderDraft(picks);
   $("draftOverlay").classList.add("show");
 }
 function renderDraft(picks){
-  $("draftChoices").innerHTML=picks.map(p=>`<button class="draftchoice" data-perk="${p.id}">
-    <div class="emoji">${p.emoji}</div><b>${p.name}</b><span>${p.desc}</span></button>`).join("");
+  $("draftChoices").innerHTML=picks.map(p=>{
+    const next=perkRank(p.id)+1;
+    return `<button class="draftchoice rarity-${p.rarity}" data-perk="${p.id}">
+      <div class="emoji">${p.emoji}</div>
+      <div class="perk-meta"><span class="rarity-tag">${p.rarity}</span><span>Rank ${next}/${p.max||1}</span></div>
+      <b>${p.name}</b><span>${p.desc}</span>
+    </button>`
+  }).join("");
   document.querySelectorAll("[data-perk]").forEach(b=>b.onclick=()=>choosePerk(b.dataset.perk));
   const rr=meta.run.rerolls||0;
   $("rerollBtn").classList.toggle("hidden",rr<=0);$("rerollCount").textContent=rr;
-  $("rerollBtn").onclick=()=>{if(meta.run.rerolls<=0)return;meta.run.rerolls--;renderDraft(shuffle(PERKS).slice(0,3));save();}
+  $("rerollBtn").onclick=()=>{
+    if(meta.run.rerolls<=0)return;
+    meta.run.rerolls--;
+    renderDraft(weightedPerkPick(availablePerks(),3));
+    save();
+  }
 }
 function choosePerk(id){
   const p=PERKS.find(x=>x.id===id);
-  meta.run.perks.push(p);meta.run.log.unshift(`Mutation gained: ${p.name}.`);
+  if(!p||perkRank(id)>=(p.max||1))return;
+  meta.run.perks.push(p);
+  setRunNotice(`${p.name} installed — Rank ${perkRank(id)}/${p.max||1}.`);
   $("draftOverlay").classList.remove("show");
   newFloor();save();renderAll();
 }
@@ -1210,6 +1508,7 @@ function renderRun(){
     $("sectorText").textContent="No active sector";
     $("safeLeftLabel").textContent="0";
     $("markCount").textContent="0";
+    $("cacheCount").textContent="0";
     $("faceGlyph").textContent=":)";
     $("runNotice").textContent="Start a run from Home.";
     renderBoard();
@@ -1231,6 +1530,7 @@ function renderRun(){
   $("minesCounter").textContent=String(remainingMines).padStart(3,"0");
   $("safeLeftLabel").textContent=b?(b.cells.length-b.mines-b.opened):0;
   $("markCount").textContent=b?b.flags:0;
+  $("cacheCount").textContent=r.depthCaches||0;
 
   $("scanBtn").disabled=!b||!b.generated||b.scans<=0||r.ended;
   $("retreatBtn").disabled=r.ended;
@@ -1242,7 +1542,14 @@ function renderRun(){
   $("modifierBox").textContent=mod?`WARNING: ${mod.name} — ${mod.desc}`:"";
 
   $("flawlessPill").textContent=`Flawless x${r.flawlessStreak}`;
-  $("runPerkList").textContent=r.perks.length?r.perks.map(p=>`[${p.emoji}] ${p.name}`).join("   "):"No modules installed.";
+  if(r.perks.length){
+    const seen=[];
+    r.perks.forEach(p=>{if(!seen.includes(p.id))seen.push(p.id)});
+    $("runPerkList").textContent=seen.map(id=>{
+      const p=PERKS.find(x=>x.id===id);
+      return `[${p.emoji}] ${p.name} ${perkRank(id)>1?`x${perkRank(id)}`:""}`;
+    }).join("   ");
+  }else $("runPerkList").textContent="No modules installed.";
   $("runLog").innerHTML=r.log.map(x=>`<div>${x}</div>`).join("");
 
   if(r.ended){
@@ -1250,7 +1557,7 @@ function renderRun(){
   }else if(b&&!b.generated){
     $("runNotice").textContent="Select any tile to begin.";
   }else{
-    $("runNotice").textContent="Ready.";
+    $("runNotice").textContent=r.notice||"Ready.";
   }
   renderBoard();
 }
@@ -1262,9 +1569,11 @@ function showPerksWindow(){
   if(!r||!r.perks.length){
     $("infoBody").innerHTML='<p>No run perks are currently installed.</p>';
   }else{
-    $("infoBody").innerHTML='<div class="perk-dialog-list">'+r.perks.map(p=>
-      `<div class="perk-dialog-item"><b>[${p.emoji}] ${p.name}</b><br>${p.desc}</div>`
-    ).join("")+'</div>';
+    const ids=[...new Set(r.perks.map(p=>p.id))];
+    $("infoBody").innerHTML='<div class="perk-dialog-list">'+ids.map(id=>{
+      const p=PERKS.find(x=>x.id===id),rank=perkRank(id);
+      return `<div class="perk-dialog-item"><b>[${p.emoji}] ${p.name} · Rank ${rank}/${p.max||1}</b><br>${p.desc}</div>`;
+    }).join("")+'</div>';
   }
   $("infoOverlay").classList.add("show");
 }

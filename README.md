@@ -77,3 +77,17 @@ This build uses a faux late-90s desktop-game interface:
 - compact mobile layout better suited to an iPhone screen
 
 Important: while a run is active, flags/marks are player guesses. A clue of 2 may temporarily have three marked squares around it if one of those marks is wrong. The clue always represents actual hidden mines, not the number of player marks.
+
+
+## v1.2 - run variety / reward pass
+- perk draft now appears every 2 cleared floors
+- most run perks now visibly trigger while playing instead of only modifying end-of-floor math
+- perks can have ranks and reappear to become stronger
+- added common / uncommon / rare draft weighting
+- guaranteed Depth Cache every 5 cleared floors:
+  - large bonus Echo payout
+  - +1 perk reroll
+  - repairs 1 Integrity if damaged
+- increased base floor rewards
+- active perks include random safe-tile procs, auto-sweeps, instant Echo drops, free scans, correct-flag procs, high-clue bonuses, damage saves, shields, and more
+- visual style softened from literal Windows 98 recreation toward a cleaner indie-game UI that still strongly references classic Minesweeper/Win98
