@@ -759,7 +759,7 @@
   <div class="top">
     <div class="title-left">
       <span class="app-icon" aria-hidden="true"></span>
-      <div class="titlecopy"><h1>MINEBOUND.EXE</h1><span class="sub">Rogue Minefield Utility v1.1</span></div>
+      <div class="titlecopy"><h1>MINEBOUND.EXE</h1><span class="sub">Rogue Minefield Utility v1.2.1</span></div>
     </div>
     <div class="currency"><span id="echoesTop">0</span></div>
     <div class="window-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></div>
@@ -1049,9 +1049,12 @@ function buyUpgrade(id){
 }
 
 function startRun(){
-  if(meta.run && !meta.run.ended){
+  const activeRun = meta.run && meta.run.ended !== true;
+  if(activeRun){
     if(!confirm("Abandon your current run and start a new one?"))return;
   }
+  // Clear stale state from older builds before constructing a replacement.
+  meta.run=null;
   const starter=meta.selectedStarter;
   const maxHp=2+(meta.upgrades.vest||0)+(starter==="patch"?1:0);
   meta.totalRuns++;
@@ -1506,7 +1509,6 @@ function renderRun(){
     $("runEchoStat").textContent="0";
     $("minesCounter").textContent="000";
     $("sectorText").textContent="No active sector";
-    $("safeLeftLabel").textContent="0";
     $("markCount").textContent="0";
     $("cacheCount").textContent="0";
     $("faceGlyph").textContent=":)";
@@ -1528,7 +1530,6 @@ function renderRun(){
 
   const remainingMines=b?Math.max(0,b.mines-b.flags):0;
   $("minesCounter").textContent=String(remainingMines).padStart(3,"0");
-  $("safeLeftLabel").textContent=b?(b.cells.length-b.mines-b.opened):0;
   $("markCount").textContent=b?b.flags:0;
   $("cacheCount").textContent=r.depthCaches||0;
 
@@ -1604,7 +1605,7 @@ function renderAll(){
 $("startRunBtn").onclick=startRun;
 $("scanBtn").onclick=useScan;
 $("retreatBtn").onclick=retreat;
-$("faceBtn").onclick=()=>{ if(meta.run&&!meta.run.ended&&!confirm("Start a new run? Current run progress will be lost."))return; startRun(); };
+$("faceBtn").onclick=startRun;
 $("perksWindowBtn").onclick=showPerksWindow;
 $("logWindowBtn").onclick=showLogWindow;
 $("infoCloseBtn").onclick=closeInfo;

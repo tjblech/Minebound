@@ -91,3 +91,12 @@ Important: while a run is active, flags/marks are player guesses. A clue of 2 ma
 - increased base floor rewards
 - active perks include random safe-tile procs, auto-sweeps, instant Echo drops, free scans, correct-flag procs, high-clue bonuses, damage saves, shields, and more
 - visual style softened from literal Windows 98 recreation toward a cleaner indie-game UI that still strongly references classic Minesweeper/Win98
+
+
+## v1.2.1 hotfix
+- fixes New Game appearing to do nothing after confirming an abandoned run
+- root cause: compact HUD removed `safeLeftLabel`, but render code still accessed it and threw an exception
+- stale old-run state is explicitly cleared before a replacement run is constructed
+- reset-face button no longer creates a duplicate confirmation
+- restored manifest and service worker files
+- all direct JavaScript DOM references were checked against the current HTML
