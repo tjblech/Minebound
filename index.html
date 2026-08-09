@@ -387,6 +387,128 @@
     body[data-anomaly="noflags"] .top{background:repeating-linear-gradient(90deg,#000080 0 18px,#0019aa 18px 21px,#000080 21px 37px)}
     body[data-anomaly="rich"] .currency{color:#ffff00;text-shadow:0 0 3px rgba(255,255,0,.5)}
 
+
+    .game-window{
+      background:var(--win);
+      padding:6px;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #808080;border-bottom:2px solid #808080;
+    }
+    .game-menubar{
+      display:flex;justify-content:space-between;align-items:center;gap:8px;
+      min-height:24px;padding:1px 3px 5px;
+      font-size:11px;
+    }
+    .menu-link{
+      border:0;background:transparent;color:#000;padding:2px 5px;text-decoration:underline;
+    }
+    .menu-link:active{background:#000080;color:#fff}
+    .mine-hud{
+      display:grid;grid-template-columns:1fr 58px 1fr;align-items:center;gap:10px;
+      padding:7px;margin-bottom:6px;
+      background:#bdbdbd;
+      border-top:3px solid #808080;border-left:3px solid #808080;border-right:3px solid #fff;border-bottom:3px solid #fff;
+    }
+    .led-box{
+      height:48px;background:#050505;
+      border-top:2px solid #404040;border-left:2px solid #404040;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+    }
+    .led-box>span{
+      color:#ff2020;font:bold 24px/1 "Courier New",monospace;letter-spacing:2px;
+      text-shadow:0 0 4px rgba(255,0,0,.55);
+    }
+    .led-box small{font-size:8px;color:#aaa;margin-top:3px;letter-spacing:.08em}
+    .face-btn{
+      width:44px;height:44px;margin:auto;
+      background:#c0c0c0;color:#000;font:bold 15px "Courier New",monospace;
+      border-top:3px solid #fff;border-left:3px solid #fff;border-right:3px solid #808080;border-bottom:3px solid #808080;
+    }
+    .face-btn:active{
+      border-top:3px solid #808080;border-left:3px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    }
+    .game-toolbar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:6px}
+    .tool-btn{padding:5px 7px}
+    .statusbar{
+      display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;
+      margin-top:6px;padding:4px 5px;background:#c0c0c0;color:#111;
+      border-top:2px solid #808080;border-left:2px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      font-size:10px;
+    }
+    .board-wrap{min-height:0;padding:7px}
+    .cell{position:relative}
+    .flag-glyph{
+      width:15px;height:14px;display:block;position:relative;
+    }
+    .flag-glyph:before{
+      content:"";position:absolute;left:4px;top:1px;width:0;height:0;
+      border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:9px solid #e00000;
+    }
+    .flag-glyph:after{
+      content:"";position:absolute;left:7px;top:2px;width:2px;height:11px;background:#000;
+      box-shadow:-4px 10px 0 0 #000,0 10px 0 0 #000,4px 10px 0 0 #000;
+    }
+    .mine-glyph{
+      width:13px;height:13px;border-radius:50%;background:#000;display:block;position:relative;
+    }
+    .mine-glyph:before{
+      content:"";position:absolute;left:-4px;right:-4px;top:5px;height:3px;background:#000;
+      box-shadow:0 -5px 0 -1px #000,0 5px 0 -1px #000;
+    }
+    .mine-glyph:after{
+      content:"";position:absolute;left:5px;top:-4px;width:3px;height:21px;background:#000;
+      transform:rotate(45deg);
+      box-shadow:0 0 0 0 #000;
+    }
+    .cell.exploded{background:#ff3b30!important}
+    .cell.wrong-flag{background:#c0c0c0!important}
+    .wrong-x{
+      position:relative;width:18px;height:18px;display:block;
+    }
+    .wrong-x:before,.wrong-x:after{
+      content:"";position:absolute;left:8px;top:1px;width:3px;height:17px;background:#d00000;
+    }
+    .wrong-x:before{transform:rotate(45deg)}
+    .wrong-x:after{transform:rotate(-45deg)}
+    .win-overlay{
+      position:fixed;inset:0;z-index:40;display:none;place-items:center;
+      padding:18px;background:rgba(0,0,0,.28);
+    }
+    .win-overlay.show{display:grid}
+    .win-dialog{
+      position:relative;width:min(430px,100%);background:#c0c0c0;padding:3px;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+      box-shadow:4px 4px 0 rgba(0,0,0,.45);
+    }
+    .dialog-titlebar{
+      height:24px;display:flex;align-items:center;justify-content:space-between;
+      padding:2px 3px 2px 6px;background:linear-gradient(90deg,#000080,#1084d0);color:#fff;font-weight:bold;
+    }
+    .dialog-x{
+      width:20px;height:19px;padding:0;background:#c0c0c0;color:#000;font-weight:bold;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+    }
+    .dialog-body{padding:14px 12px;max-height:60vh;overflow:auto;line-height:1.45}
+    .dialog-actions{display:flex;justify-content:center;gap:7px;padding:0 10px 10px;flex-wrap:wrap}
+    .end-body{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start}
+    .end-body p{margin:7px 0}
+    .error-icon{
+      width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+      background:#d00000;color:#fff;font:bold 22px Arial;border:2px solid #fff;box-shadow:0 0 0 1px #000;
+    }
+    .perk-dialog-list{display:grid;gap:5px}
+    .perk-dialog-item{padding:5px;background:#fff;border:1px solid #808080;font-family:"Courier New",monospace;font-size:11px}
+    .log-dialog{background:#fff;border:2px inset #ddd;padding:7px;font:11px/1.5 "Courier New",monospace;max-height:45vh;overflow:auto}
+    .log-dialog div{border-bottom:1px dotted #aaa;padding:2px 0}
+    @media(max-width:690px){
+      .game-menubar{font-size:10px}
+      .mine-hud{grid-template-columns:1fr 48px 1fr;gap:6px;padding:5px}
+      .face-btn{width:40px;height:40px}
+      .led-box{height:43px}
+      .led-box>span{font-size:21px}
+      .board-wrap{padding:5px}
+      .statusbar{font-size:9px}
+    }
+
     @media(max-width:690px){
       html,body{font-size:11px}
       .app{width:calc(100% - 6px);margin:3px auto 72px}
@@ -403,6 +525,87 @@
       .currency{min-width:76px;font-size:12px}
       .window-controls i{width:16px;height:16px}
     }
+  
+    .game-window{
+      max-width:700px;
+      margin:0 auto;
+    }
+    #runScreen{
+      padding-bottom:4px;
+    }
+    .mine-hud{
+      margin:4px 0 6px;
+    }
+    .board-wrap{
+      max-height:58vh;
+      min-height:250px;
+      align-items:center;
+    }
+    .game-toolbar{
+      margin-top:6px;
+    }
+    .mine-legend{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      align-items:center;
+      padding:5px 7px;
+      margin-top:5px;
+      background:#c0c0c0;
+      border-top:1px solid #808080;
+      font-size:10px;
+      color:#333;
+    }
+    .mine-legend>span{display:flex;align-items:center;gap:4px}
+    .legend-flag,.legend-mine,.legend-wrong{
+      width:18px;height:18px;display:grid;place-items:center;
+      background:#c0c0c0;border:1px solid #808080;position:relative;
+    }
+    .legend-flag .flag-glyph,.legend-mine .mine-glyph,.legend-wrong .wrong-x{
+      transform:scale(.7);
+    }
+    .cell.wrong-flag{
+      background:#c0c0c0 !important;
+      position:relative;
+    }
+    .wrong-x{
+      width:18px;height:18px;position:relative;display:block;
+    }
+    .wrong-x:before,.wrong-x:after{
+      content:"";position:absolute;left:8px;top:1px;width:2px;height:16px;background:#d00000;
+    }
+    .wrong-x:before{transform:rotate(45deg)}
+    .wrong-x:after{transform:rotate(-45deg)}
+    .cell.exploded{
+      background:#ff2e2e !important;
+    }
+    .statusbar{
+      margin-top:4px;
+    }
+    @media(max-width:690px){
+      .game-menubar{font-size:10px}
+      .game-menubar>div{display:flex;gap:2px}
+      .menu-link{padding:2px 4px}
+      .mine-hud{padding:4px}
+      .led-box span{font-size:22px}
+      .board-wrap{max-height:52vh;min-height:220px;padding:5px}
+      .mine-legend{gap:6px 10px;font-size:9px}
+      .statusbar{font-size:9px}
+    }
+
+  
+    .end-help{max-width:360px;font-size:11px;color:#333;line-height:1.35}
+  
+    .cell.correct-flag{background:#b7c8ae!important}
+    .cell.correct-flag .flag-glyph:before{border-right-color:#008000}
+    @media(max-width:690px){
+      #runScreen{padding-left:2px;padding-right:2px}
+      .game-window{padding:4px}
+      .game-menubar{padding-bottom:3px}
+      .game-toolbar{margin-top:4px}
+      .statusbar{margin-top:4px}
+    }
+
   </style>
 
 
@@ -412,7 +615,7 @@
   <div class="top">
     <div class="title-left">
       <span class="app-icon" aria-hidden="true"></span>
-      <div class="titlecopy"><h1>MINEBOUND.EXE</h1><span class="sub">Rogue Current Sector Utility v1.0</span></div>
+      <div class="titlecopy"><h1>MINEBOUND.EXE</h1><span class="sub">Rogue Minefield Utility v1.1</span></div>
     </div>
     <div class="currency"><span id="echoesTop">0</span></div>
     <div class="window-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></div>
@@ -444,40 +647,57 @@
   </section>
 
   <section id="runScreen" class="screen">
-    <div class="stats">
-      <div class="stat"><b id="floorStat">1</b><span>Floor</span></div>
-      <div class="stat"><b id="hpStat">2/2</b><span>Integrity</span></div>
-      <div class="stat"><b id="scanStat">1</b><span>Scans</span></div>
-      <div class="stat"><b id="runEchoStat" class="gold">0</b><span>Run Echoes</span></div>
-    </div>
     <div id="modifierBox" class="modifier hidden"></div>
-    <div class="card">
-      <div class="row wrap">
+
+    <div class="game-window">
+      <div class="game-menubar">
+        <span id="sectorText">Sector 1 · 7×7</span>
         <div>
-          <div class="section-title" style="margin:0">Current Sector <span id="sizeLabel" class="muted"></span></div>
-          <div class="muted" style="font-size:12px"><span id="minesLabel"></span> mines · <span id="safeLeftLabel"></span> safe tiles left</div>
-        </div>
-        <div class="row">
-          <button class="mini" id="scanBtn">Scan</button>
-          <button class="mini" id="retreatBtn">Exit Run</button>
+          <button class="menu-link" id="perksWindowBtn">Perks...</button>
+          <button class="menu-link" id="logWindowBtn">Log...</button>
+          <button class="menu-link" id="retreatBtn">Exit...</button>
         </div>
       </div>
-      <div class="modebar">
-        <button class="mini active" id="revealModeBtn">Open</button>
-        <button class="mini" id="flagModeBtn">Mark</button>
+
+      <div class="mine-hud">
+        <div class="led-box">
+          <span id="minesCounter">006</span>
+          <small>MINES</small>
+        </div>
+
+        <button id="faceBtn" class="face-btn" aria-label="New game" title="New game">
+          <span id="faceGlyph">:)</span>
+        </button>
+
+        <div class="led-box">
+          <span id="hpStat">02</span>
+          <small>INTEGRITY</small>
+        </div>
       </div>
+
       <div class="board-wrap"><div id="board" class="board"></div></div>
-      <div class="notice" id="runNotice"></div>
-    </div>
 
-    <div class="card" style="margin-top:12px">
-      <div class="row"><div class="section-title" style="margin:0">Installed Perks</div><div class="pill" id="flawlessPill">Flawless x0</div></div>
-      <div id="runPerkList" class="muted" style="font-size:13px;line-height:1.65;margin-top:8px">None yet.</div>
-    </div>
+      <div class="game-toolbar">
+        <button class="mini tool-btn active" id="revealModeBtn">Open</button>
+        <button class="mini tool-btn" id="flagModeBtn">Flag</button>
+        <button class="mini tool-btn" id="scanBtn">Scan <span id="scanStat">1</span></button>
+      </div>
 
-    <div class="card" style="margin-top:12px">
-      <div class="section-title">MINEBOUND.LOG</div>
-      <div class="log" id="runLog"></div>
+      <div class="mine-legend">
+        <span><span class="legend-flag"><span class="flag-glyph"></span></span> player flag</span>
+        <span><span class="legend-mine"><span class="mine-glyph"></span></span> confirmed mine after run</span>
+        <span><span class="legend-wrong"><span class="wrong-x"></span></span> bad flag after run</span>
+      </div>
+
+      <div class="statusbar">
+        <span id="runNotice">Ready.</span>
+        <span>Floor <b id="floorStat">1</b> · Echoes <b id="runEchoStat">0</b> · Marks <b id="markCount">0</b> · <span id="safeLeftLabel">0</span> safe left</span>
+      </div>
+      <span id="sizeLabel" class="hidden"></span>
+      <span id="minesLabel" class="hidden"></span>
+      <span id="flawlessPill" class="hidden"></span>
+      <div id="runPerkList" class="hidden"></div>
+      <div id="runLog" class="hidden"></div>
     </div>
   </section>
 
@@ -517,6 +737,40 @@
   <button class="tab" data-tab="runScreen">Run</button>
   <button class="tab" data-tab="upgradesScreen">Upgrades</button>
   <button class="tab" data-tab="recordsScreen">Records</button>
+</div>
+
+
+<div id="infoOverlay" class="win-overlay">
+  <div class="win-dialog">
+    <div class="dialog-titlebar">
+      <span id="infoTitle">MINEBOUND.EXE</span>
+      <button class="dialog-x" id="infoCloseBtn">×</button>
+    </div>
+    <div class="dialog-body" id="infoBody"></div>
+    <div class="dialog-actions"><button class="mini" id="infoOkBtn">OK</button></div>
+  </div>
+</div>
+
+<div id="endOverlay" class="win-overlay">
+  <div class="win-dialog end-dialog">
+    <div class="dialog-titlebar">
+      <span>MINEBOUND.EXE</span>
+      <button class="dialog-x" id="endCloseBtn">×</button>
+    </div>
+    <div class="dialog-body end-body">
+      <div class="error-icon">!</div>
+      <div>
+        <b id="endTitle">Run terminated</b>
+        <p id="endMessage">Integrity reached zero.</p><p style="margin-top:5px;font-size:11px">The board behind this window now shows the real mine layout. Incorrect flags are marked with a red X.</p><p class="end-help">The board behind this dialog now shows every real mine. Any flag on a safe tile is crossed out.</p>
+        <p>Echoes banked: <b id="endEchoes">0</b></p>
+      </div>
+    </div>
+    <div class="dialog-actions">
+      <button class="mini" id="endNewBtn">New Game</button>
+      <button class="mini" id="endHomeBtn">Return to Menu</button>
+      <button class="mini" id="endViewBtn">View Board</button>
+    </div>
+  </div>
 </div>
 
 <div id="draftOverlay" class="draft">
@@ -678,15 +932,76 @@ function neighbors(idx){
   }
   return out;
 }
+function validateGeneratedBoard(){
+  const b=meta.run.board;
+  if(!b||!b.generated)return false;
+  const actualMineCount=b.cells.filter(c=>c.mine).length;
+  if(actualMineCount!==b.mines){
+    console.error("Minebound board validation failed: mine count mismatch", {expected:b.mines,actual:actualMineCount});
+    return false;
+  }
+  for(let i=0;i<b.cells.length;i++){
+    const cell=b.cells[i];
+    if(cell.mine)continue;
+    const actual=neighbors(i).filter(j=>b.cells[j].mine).length;
+    if(cell.n!==actual){
+      console.error("Minebound board validation failed: clue mismatch", {index:i,stored:cell.n,actual});
+      return false;
+    }
+  }
+  return true;
+}
+function resetGeneratedCells(){
+  const b=meta.run.board;
+  b.cells.forEach(c=>{c.mine=false;c.n=0;c.open=false;c.flag=false});
+  b.opened=0;b.flags=0;b.generated=false;b.explodedIndex=null;b.hintIndex=null;
+}
+
+function verifyBoardCounts(){
+  const b=meta.run&&meta.run.board;
+  if(!b||!b.generated)return true;
+  let valid=true;
+  b.cells.forEach((cell,i)=>{
+    if(cell.mine)return;
+    const actual=neighbors(i).filter(j=>b.cells[j].mine).length;
+    if(cell.n!==actual){
+      cell.n=actual;
+      valid=false;
+    }
+  });
+  if(!valid){
+    meta.run.log.unshift("BOARDCHK repaired an invalid clue map.");
+  }
+  return valid;
+}
 function generateBoard(firstIdx){
   const b=meta.run.board;
   const forbidden=new Set([firstIdx,...neighbors(firstIdx)]);
-  let choices=[];
-  for(let i=0;i<b.cells.length;i++)if(!forbidden.has(i))choices.push(i);
-  choices=shuffle(choices).slice(0,b.mines);
-  choices.forEach(i=>b.cells[i].mine=true);
-  b.cells.forEach((cell,i)=>{if(!cell.mine)cell.n=neighbors(i).filter(j=>b.cells[j].mine).length});
-  b.generated=true;
+
+  for(let attempt=0;attempt<5;attempt++){
+    b.cells.forEach(c=>{c.mine=false;c.n=0;c.open=false;c.flag=false});
+    b.opened=0;b.flags=0;b.explodedIndex=null;b.hintIndex=null;
+
+    let choices=[];
+    for(let i=0;i<b.cells.length;i++)if(!forbidden.has(i))choices.push(i);
+
+    // The safe opening zone can reduce available cells on very small boards.
+    const mineCount=Math.min(b.mines,choices.length);
+    shuffle(choices).slice(0,mineCount).forEach(i=>b.cells[i].mine=true);
+    b.mines=mineCount;
+
+    b.cells.forEach((cell,i)=>{
+      if(!cell.mine)cell.n=neighbors(i).filter(j=>b.cells[j].mine).length;
+    });
+    b.generated=true;
+
+    if(validateGeneratedBoard())break;
+    b.generated=false;
+  }
+
+  if(!validateGeneratedBoard()){
+    throw new Error("Minebound refused to use an invalid generated board.");
+  }
 
   // Permanent Survey Training: auto-open safe tiles.
   for(let k=0;k<(meta.upgrades.survey||0);k++)openRandomSafe(false);
@@ -724,7 +1039,7 @@ function floodOpen(start){
 }
 function hitMine(idx){
   const r=meta.run,b=r.board,c=b.cells[idx];
-  c.open=true;b.floorHit=true;meta.totalMinesHit++;
+  c.open=true;b.floorHit=true;b.explodedIndex=idx;meta.totalMinesHit++;
   let dmg=1;
   const mod=currentModifier();if(mod&&mod.id==="fragile")dmg=2;
 
@@ -814,15 +1129,16 @@ function choosePerk(id){
 }
 function retreat(){
   if(!meta.run||meta.run.ended)return;
-  if(confirm("Exit Run and bank your current Echoes?"))endRun("Exit Runed safely.");
+  if(confirm("Exit Run and bank your current Echoes?"))endRun("Exited safely.");
 }
 function endRun(reason){
   const r=meta.run;if(!r||r.ended)return;
   r.ended=true;
+  r.endReason=reason;
   meta.echoes+=r.runEchoes;meta.lifetimeEchoes+=r.runEchoes;
   r.log.unshift(`${reason} Banked ${r.runEchoes} Echoes.`);
   save();renderAll();
-  $("runNotice").textContent=`PROCESS ENDED — banked ${r.runEchoes} Echoes.`;
+  showEndDialog();
 }
 function clickCell(idx){
   if(!meta.run||meta.run.ended)return;
@@ -834,14 +1150,45 @@ function renderBoard(){
   $("board").style.gridTemplateColumns=`repeat(${b.cols},auto)`;
   $("board").innerHTML=b.cells.map((c,i)=>{
     let txt="",cls="cell";
-    if(c.open){
+
+    if(r.ended){
+      if(c.mine && c.flag && i!==b.explodedIndex){
+        cls+=" open correct-flag";
+        txt='<span class="flag-glyph" aria-label="correct flag"></span>';
+      }else if(c.mine){
+        cls+=" open mine";
+        if(i===b.explodedIndex)cls+=" exploded";
+        txt='<span class="mine-glyph" aria-label="mine"></span>';
+      }else if(c.flag){
+        cls+=" open wrong-flag";
+        txt='<span class="wrong-x" aria-label="incorrect flag"></span>';
+      }else{
+        cls+=" open";
+        if(c.n){txt=c.n;cls+=` n${c.n}`}
+      }
+    }else if(c.open){
       cls+=" open";
-      if(c.mine){txt="*";cls+=" mine"}
-      else if(c.n){txt=c.n;cls+=` n${c.n}`}
-    }else if(c.flag){txt="P";cls+=" flag"}
-    if(b.hintIndex===i&&!c.open)cls+=" hint";
-    return `<button class="${cls}" data-cell="${i}" aria-label="cell">${txt}</button>`
+      if(c.mine){
+        txt='<span class="mine-glyph" aria-label="mine"></span>';
+        cls+=" mine";
+        if(i===b.explodedIndex)cls+=" exploded";
+      }else if(c.n){
+        txt=c.n;cls+=` n${c.n}`;
+      }
+    }else if(c.flag){
+      txt='<span class="flag-glyph" aria-label="flag"></span>';
+      cls+=" flag";
+    }
+
+    if(!r.ended && b.hintIndex===i&&!c.open)cls+=" hint";
+    const stateLabel=r.ended
+      ? (c.mine?"confirmed mine":(c.flag?"incorrect flag":(c.open?`open ${c.n||0}`:"closed")))
+      : (c.flag?"player flag (unconfirmed)":(c.open?`open ${c.n||0}`:"closed"));
+    return `<button class="${cls}" data-cell="${i}" aria-label="${stateLabel}" title="${stateLabel}" ${r.ended?"disabled":""}>${txt}</button>`
   }).join("");
+
+  if(r.ended)return;
+
   document.querySelectorAll("[data-cell]").forEach(el=>{
     const idx=+el.dataset.cell;
     el.onclick=()=>clickCell(idx);
@@ -855,25 +1202,86 @@ function renderRun(){
   const r=meta.run;
   if(!r){
     document.body.dataset.anomaly="";
-    $("floorStat").textContent="-";$("hpStat").textContent="-";$("scanStat").textContent="-";$("runEchoStat").textContent="0";
-    $("runNotice").textContent="Start a run from Home.";renderBoard();return;
+    $("floorStat").textContent="-";
+    $("hpStat").textContent="--";
+    $("scanStat").textContent="0";
+    $("runEchoStat").textContent="0";
+    $("minesCounter").textContent="000";
+    $("sectorText").textContent="No active sector";
+    $("safeLeftLabel").textContent="0";
+    $("markCount").textContent="0";
+    $("faceGlyph").textContent=":)";
+    $("runNotice").textContent="Start a run from Home.";
+    renderBoard();
+    return;
   }
+
   const b=r.board,mod=currentModifier();
   document.body.dataset.anomaly=mod?mod.id:"";
-  $("floorStat").textContent=r.floor;$("hpStat").textContent=`${Math.max(0,r.hp)}/${r.maxHp}${r.shield?` +S${r.shield}`:""}`;
-  $("scanStat").textContent=b?b.scans:0;$("runEchoStat").textContent=r.runEchoes;
-  $("sizeLabel").textContent=b?`${b.rows}×${b.cols}`:"";$("minesLabel").textContent=b?b.mines:0;
+
+  $("floorStat").textContent=r.floor;
+  $("hpStat").textContent=String(Math.max(0,r.hp)).padStart(2,"0");
+  $("scanStat").textContent=b?b.scans:0;
+  $("runEchoStat").textContent=r.runEchoes;
+  $("sizeLabel").textContent=b?`${b.rows}×${b.cols}`:"";
+  $("minesLabel").textContent=b?b.mines:0;
+  $("sectorText").textContent=b?`Sector ${r.floor} · ${b.rows}×${b.cols}`:`Sector ${r.floor}`;
+
+  const remainingMines=b?Math.max(0,b.mines-b.flags):0;
+  $("minesCounter").textContent=String(remainingMines).padStart(3,"0");
   $("safeLeftLabel").textContent=b?(b.cells.length-b.mines-b.opened):0;
+  $("markCount").textContent=b?b.flags:0;
+
   $("scanBtn").disabled=!b||!b.generated||b.scans<=0||r.ended;
   $("retreatBtn").disabled=r.ended;
+  $("revealModeBtn").disabled=r.ended;
+  $("flagModeBtn").disabled=r.ended;
+  $("faceGlyph").textContent=r.ended?":(" : ":)";
+
   $("modifierBox").classList.toggle("hidden",!mod);
-  $("modifierBox").textContent=mod?`⚠ ${mod.name}: ${mod.desc}`:"";
+  $("modifierBox").textContent=mod?`WARNING: ${mod.name} — ${mod.desc}`:"";
+
   $("flawlessPill").textContent=`Flawless x${r.flawlessStreak}`;
   $("runPerkList").textContent=r.perks.length?r.perks.map(p=>`[${p.emoji}] ${p.name}`).join("   "):"No modules installed.";
   $("runLog").innerHTML=r.log.map(x=>`<div>${x}</div>`).join("");
-  if(r.ended)$("runNotice").textContent=`Run ended. ${r.runEchoes} Echoes were banked.`;
+
+  if(r.ended){
+    $("runNotice").textContent="Run terminated. Real mines revealed; incorrect flags are crossed out.";
+  }else if(b&&!b.generated){
+    $("runNotice").textContent="Select any tile to begin.";
+  }else{
+    $("runNotice").textContent="Ready.";
+  }
   renderBoard();
 }
+
+function closeInfo(){ $("infoOverlay").classList.remove("show"); }
+function showPerksWindow(){
+  const r=meta.run;
+  $("infoTitle").textContent="MINEBOUND.EXE - Installed Perks";
+  if(!r||!r.perks.length){
+    $("infoBody").innerHTML='<p>No run perks are currently installed.</p>';
+  }else{
+    $("infoBody").innerHTML='<div class="perk-dialog-list">'+r.perks.map(p=>
+      `<div class="perk-dialog-item"><b>[${p.emoji}] ${p.name}</b><br>${p.desc}</div>`
+    ).join("")+'</div>';
+  }
+  $("infoOverlay").classList.add("show");
+}
+function showLogWindow(){
+  const r=meta.run;
+  $("infoTitle").textContent="MINEBOUND.LOG - Notepad";
+  $("infoBody").innerHTML='<div class="log-dialog">'+(r?r.log.map(x=>`<div>${x}</div>`).join(""):"No active run.")+'</div>';
+  $("infoOverlay").classList.add("show");
+}
+function showEndDialog(){
+  const r=meta.run;if(!r||!r.ended)return;
+  $("endTitle").textContent=r.hp<=0?"Run terminated":"Run complete";
+  $("endMessage").textContent=r.endReason||"The run has ended.";
+  $("endEchoes").textContent=r.runEchoes;
+  $("endOverlay").classList.add("show");
+}
+function closeEnd(){ $("endOverlay").classList.remove("show"); }
 function renderRecords(){
   $("bestFloor").textContent=meta.bestFloor;$("totalRuns").textContent=meta.totalRuns;
   $("lifetimeEchoes").textContent=meta.lifetimeEchoes;$("totalClears").textContent=meta.totalClears;
@@ -884,7 +1292,19 @@ function renderAll(){
   $("echoesTop").textContent=meta.echoes;renderStarters();renderUpgrades();renderRecords();renderRun();
 }
 
-$("startRunBtn").onclick=startRun;$("scanBtn").onclick=useScan;$("retreatBtn").onclick=retreat;
+$("startRunBtn").onclick=startRun;
+$("scanBtn").onclick=useScan;
+$("retreatBtn").onclick=retreat;
+$("faceBtn").onclick=()=>{ if(meta.run&&!meta.run.ended&&!confirm("Start a new run? Current run progress will be lost."))return; startRun(); };
+$("perksWindowBtn").onclick=showPerksWindow;
+$("logWindowBtn").onclick=showLogWindow;
+$("infoCloseBtn").onclick=closeInfo;
+$("infoOkBtn").onclick=closeInfo;
+$("infoOverlay").onclick=e=>{if(e.target===$("infoOverlay"))closeInfo()};
+$("endCloseBtn").onclick=closeEnd;
+$("endViewBtn").onclick=closeEnd;
+$("endNewBtn").onclick=()=>{closeEnd();startRun()};
+$("endHomeBtn").onclick=()=>{closeEnd();showScreen("homeScreen")};
 $("revealModeBtn").onclick=()=>{mode="reveal";$("revealModeBtn").classList.add("active");$("flagModeBtn").classList.remove("active")};
 $("flagModeBtn").onclick=()=>{mode="flag";$("flagModeBtn").classList.add("active");$("revealModeBtn").classList.remove("active")};
 

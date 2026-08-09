@@ -56,3 +56,24 @@ This build uses a faux late-90s desktop-game interface:
 - Control Panel-style upgrade cards
 - subtle titlebar corruption on anomaly floors
 - reduced emoji use and small utility-style glyphs
+
+
+## v4 gameplay/readability fixes
+- Compact single-window run layout for phones.
+- Proper Windows-style run-terminated dialog.
+- All actual mines are revealed when a run ends.
+- Incorrect player flags are crossed out after a run ends.
+- Live flags are explicitly treated as unconfirmed guesses.
+- Every generated board is programmatically validated: each clue is recomputed from its neighboring mines and mine totals are checked before the board is accepted.
+
+
+## v1.1 gameplay-screen correction
+- compact classic Minesweeper HUD with mine counter, integrity counter, and reset face
+- perks and log moved into separate Windows-style dialogs
+- death now opens a Windows error dialog instead of leaving a dead dashboard
+- post-death board reveals all actual mines
+- correctly flagged mines stay flagged; incorrect flags become red X marks
+- generated clue counts are re-verified against the actual mine map
+- compact mobile layout better suited to an iPhone screen
+
+Important: while a run is active, flags/marks are player guesses. A clue of 2 may temporarily have three marked squares around it if one of those marks is wrong. The clue always represents actual hidden mines, not the number of player marks.
