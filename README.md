@@ -36,3 +36,23 @@ Then open:
 `http://localhost:8000`
 
 Service workers and installability require HTTP/HTTPS, so opening index.html directly is not enough for the full PWA behavior.
+
+
+## Visual style
+This version uses a more restrained dark industrial UI style:
+- lower-saturation palette
+- squarer controls
+- less gradient/glassmorphism
+- cleaner, less emoji-heavy navigation
+
+
+## Windows 98 / shareware restyle
+This build uses a faux late-90s desktop-game interface:
+- classic beveled Windows controls
+- title bars and taskbar-style navigation
+- red LED-style counters
+- classic Minesweeper board cells and number colors
+- dialog-box perk drafts
+- Control Panel-style upgrade cards
+- subtle titlebar corruption on anomaly floors
+- reduced emoji use and small utility-style glyphs

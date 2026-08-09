@@ -10,100 +10,430 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <title>Minebound</title>
+  
+  
   <style>
     :root{
-      --bg:#0b0e13;--panel:#131821;--panel2:#1a212c;--line:#2a3442;--text:#f5f7fb;
-      --muted:#97a3b2;--accent:#76e6b5;--accent2:#37b889;--danger:#ff6678;--gold:#ffd36a;
-      --blue:#72b7ff;--purple:#c293ff;--tile:#202936;--tile2:#2a3545;
+      --desktop:#008080;
+      --win:#c0c0c0;
+      --win-light:#ffffff;
+      --win-mid:#dfdfdf;
+      --win-dark:#808080;
+      --win-black:#000000;
+      --blue:#000080;
+      --blue2:#1084d0;
+      --text:#000000;
+      --danger:#800000;
+      --counter:#ff1717;
+      --counter-bg:#090909;
+      --green:#008000;
+      --yellow:#808000;
+      --purple:#800080;
     }
+
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-    html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#172235 0,#0b0e13 38%,#090b0f 100%);color:var(--text);
-      font-family:ui-rounded,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
-    body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overscroll-behavior:none}
-    button{font:inherit}
-    .app{max-width:860px;margin:auto;padding:14px 14px 100px}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-    h1{font-size:25px;margin:0;letter-spacing:.8px}.sub{font-size:12px;color:var(--muted)}
-    .currency{background:#171d27;border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-weight:800}
-    .card{background:rgba(19,24,33,.96);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 16px 40px rgba(0,0,0,.18)}
-    .screen{display:none}.screen.active{display:block}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}.wrap{flex-wrap:wrap}
-    .muted{color:var(--muted)}.gold{color:var(--gold)}.danger{color:var(--danger)}.good{color:var(--accent)}
-    .section-title{font-weight:900;letter-spacing:.2px;margin-bottom:10px}
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
-    .stat{background:#19202a;border:1px solid #27313d;border-radius:13px;padding:9px;text-align:center}
-    .stat b{font-size:18px;display:block}.stat span{font-size:11px;color:var(--muted)}
-    .mini{border:1px solid #354253;background:#202936;color:var(--text);border-radius:12px;padding:9px 11px;font-weight:800}
-    .mini:disabled{opacity:.38}
-    .primary{width:100%;border:0;border-radius:15px;padding:14px 16px;font-weight:900;font-size:16px;background:linear-gradient(180deg,#8bf0c6,#42c997);color:#08150f;
-      box-shadow:0 6px 0 #21775a}
-    .primary:active{transform:translateY(3px);box-shadow:0 3px 0 #21775a}
-    .dangerbtn{background:#301c24;border-color:#6a2d3d;color:#ff96a3}
-    .board-wrap{overflow:auto;padding:8px 0 2px;display:flex;justify-content:center}
-    .board{display:grid;gap:3px;touch-action:manipulation;user-select:none}
-    .cell{width:38px;height:38px;border:1px solid #344254;background:linear-gradient(180deg,#263142,#1e2835);border-radius:8px;
-      display:grid;place-items:center;font-weight:950;font-size:16px;color:#dfe8f4;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-    .cell:active{transform:scale(.96)}
-    .cell.open{background:#121821;border-color:#202b38;box-shadow:none}
-    .cell.mine{background:#351b23;border-color:#713141}.cell.flag{color:#ffd36a}
-    .cell.hint{outline:2px solid var(--accent);box-shadow:0 0 0 3px rgba(118,230,181,.12)}
-    .n1{color:#72b7ff}.n2{color:#76e6b5}.n3{color:#ff8d8d}.n4{color:#c293ff}.n5{color:#ffb363}.n6{color:#64dbe0}.n7{color:#eee}.n8{color:#9fa9b5}
-    .modebar{display:flex;gap:8px;margin:10px 0}.modebar button{flex:1}
-    .modebar .active{background:#213c34;border-color:#3f9f7e;color:#9af2cc}
-    .notice{min-height:20px;text-align:center;font-size:13px;margin-top:8px;color:var(--accent)}
-    .modifier{padding:9px 10px;border-radius:12px;background:#221b2b;border:1px solid #4c355e;color:#d4b4ff;font-size:13px;margin-bottom:10px}
-    .homehero{text-align:center;padding:22px 12px}.mineicon{font-size:70px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.4))}
-    .homehero h2{font-size:29px;margin:6px 0}.homehero p{color:var(--muted);line-height:1.45;max-width:560px;margin:0 auto 16px}
-    .perkgrid,.upgradegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-    .perk,.upgrade{background:#1a212c;border:1px solid #2c3847;border-radius:15px;padding:12px;text-align:left}
-    .perk.selected{border-color:#62d7aa;background:#183029}.perk .emoji,.upgrade .emoji{font-size:24px}.perk b,.upgrade b{display:block;margin:5px 0}
-    .perk small,.upgrade small{color:var(--muted);line-height:1.35;display:block;min-height:48px}
-    .cost{margin-top:8px;font-weight:900;color:var(--gold)}
-    .draft{position:fixed;inset:0;background:rgba(5,7,10,.82);backdrop-filter:blur(10px);z-index:20;padding:24px 14px;display:none;overflow:auto}
-    .draft.show{display:grid;place-items:center}.draftbox{max-width:760px;width:100%}
-    .draftbox h2{text-align:center;margin:0 0 5px}.draftbox>p{text-align:center;color:var(--muted);margin:0 0 14px}
-    .draftchoices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .draftchoice{background:#171f2a;border:1px solid #334357;border-radius:16px;padding:14px;text-align:left;color:var(--text)}
-    .draftchoice:active{transform:scale(.98)}.draftchoice .emoji{font-size:29px}.draftchoice b{display:block;font-size:17px;margin:7px 0 4px}
-    .draftchoice span{color:var(--muted);font-size:13px;line-height:1.35}
-    .tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;gap:7px;justify-content:center;background:rgba(9,12,17,.92);backdrop-filter:blur(15px);
-      padding:8px 10px calc(8px + env(safe-area-inset-bottom));border-top:1px solid #252e3a}
-    .tab{flex:1;max-width:180px;border:1px solid #303b49;background:#171d26;color:#96a2b1;border-radius:12px;padding:10px 5px;font-weight:850;font-size:12px}
-    .tab.active{background:#1d302b;color:#a6f4d3;border-color:#3a755f}
-    .log{max-height:160px;overflow:auto;font-size:12px;color:var(--muted);line-height:1.6}
-    .pill{border:1px solid #324052;background:#1b2430;padding:6px 8px;border-radius:999px;font-size:12px}
-    .hidden{display:none!important}
-    @media(max-width:680px){
-      .perkgrid,.upgradegrid,.draftchoices{grid-template-columns:1fr}
-      .perk small,.upgrade small{min-height:0}.stats{grid-template-columns:repeat(2,1fr)}
-      .cell{width:34px;height:34px;border-radius:7px;font-size:15px}
+    html,body{
+      margin:0;
+      min-height:100%;
+      background:
+        radial-gradient(circle at 20% 18%,rgba(255,255,255,.04),transparent 18%),
+        var(--desktop);
+      color:var(--text);
+      font-family:"MS Sans Serif",Tahoma,Geneva,Verdana,sans-serif;
+      font-size:12px;
     }
-    @media(max-width:390px){.cell{width:30px;height:30px}.app{padding-left:9px;padding-right:9px}}
+    body{
+      padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+      overscroll-behavior:none;
+    }
+    button,input{font:inherit}
+
+    .app{
+      width:min(930px,calc(100% - 16px));
+      margin:16px auto 76px;
+      padding:3px;
+      background:var(--win);
+      border-top:2px solid var(--win-light);
+      border-left:2px solid var(--win-light);
+      border-right:2px solid var(--win-black);
+      border-bottom:2px solid var(--win-black);
+      box-shadow:2px 2px 0 rgba(0,0,0,.35);
+    }
+
+    .top{
+      height:30px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      padding:3px 4px 3px 6px;
+      margin:0 0 6px;
+      background:linear-gradient(90deg,var(--blue),var(--blue2));
+      color:#fff;
+      font-weight:bold;
+    }
+    .title-left{display:flex;align-items:center;gap:6px;min-width:0}
+    .app-icon{
+      width:18px;height:18px;position:relative;flex:0 0 auto;
+      background:#c0c0c0;
+      border-top:1px solid #fff;border-left:1px solid #fff;border-right:1px solid #000;border-bottom:1px solid #000;
+    }
+    .app-icon:before{
+      content:"";
+      position:absolute;left:5px;top:5px;width:6px;height:6px;background:#000;
+      box-shadow:-3px 0 0 #000,3px 0 0 #000,0 -3px 0 #000,0 3px 0 #000;
+    }
+    .titlecopy{min-width:0}
+    h1{
+      display:inline;
+      font-size:13px;
+      margin:0;
+      letter-spacing:0;
+      font-weight:bold;
+    }
+    .sub{
+      display:inline;
+      color:#e5e5ff;
+      font-size:11px;
+      margin-left:6px;
+      white-space:nowrap;
+    }
+    .window-controls{display:flex;gap:2px;margin-left:auto}
+    .window-controls i{
+      width:18px;height:18px;background:var(--win);display:grid;place-items:center;color:#000;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+      font-style:normal;font-size:10px;line-height:1;
+    }
+    .currency{
+      min-width:92px;height:23px;padding:3px 6px;margin-right:2px;
+      background:var(--counter-bg);color:var(--counter);
+      border-top:2px solid #404040;border-left:2px solid #404040;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      font-family:"Courier New",monospace;font-size:14px;font-weight:bold;text-align:right;
+      text-shadow:0 0 3px rgba(255,0,0,.55);
+    }
+    .currency:before{content:"ECHO ";color:#999;font-size:9px;text-shadow:none}
+
+    .screen{display:none;padding:0 5px 7px}
+    .screen.active{display:block}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .wrap{flex-wrap:wrap}
+    .muted{color:#444}
+    .gold{color:inherit}
+    .danger{color:var(--danger)}
+    .good{color:var(--green)}
+
+    .card{
+      position:relative;
+      background:var(--win);
+      padding:12px 10px 10px;
+      border-top:2px solid var(--win-dark);
+      border-left:2px solid var(--win-dark);
+      border-right:2px solid var(--win-light);
+      border-bottom:2px solid var(--win-light);
+      box-shadow:none;
+      border-radius:0;
+    }
+    .section-title{
+      display:table;
+      margin:-19px 0 8px 3px;
+      padding:0 5px;
+      background:var(--win);
+      color:#000;
+      font-size:12px;
+      font-weight:normal;
+      letter-spacing:0;
+      text-transform:none;
+    }
+    .homehero{
+      padding:14px 12px 12px 86px;
+      min-height:110px;
+    }
+    .mineicon{
+      position:absolute;left:15px;top:20px;width:54px;height:54px;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #808080;border-bottom:2px solid #808080;
+      background:#d6d6d6;font-size:0;filter:none;
+    }
+    .mineicon:before{
+      content:"";
+      position:absolute;width:22px;height:22px;border-radius:50%;background:#111;left:14px;top:16px;
+      box-shadow:-9px 0 0 -7px #111,9px 0 0 -7px #111,0 -9px 0 -7px #111,0 9px 0 -7px #111,
+                 -6px -6px 0 -7px #111,6px -6px 0 -7px #111,-6px 6px 0 -7px #111,6px 6px 0 -7px #111;
+    }
+    .mineicon:after{
+      content:"";position:absolute;width:16px;height:10px;border-top:2px solid #333;border-right:2px solid #333;
+      left:29px;top:8px;transform:rotate(-20deg);
+    }
+    .homehero h2{
+      font-size:16px;margin:0 0 7px;font-weight:bold;letter-spacing:0;
+    }
+    .homehero p{
+      color:#111;line-height:1.35;max-width:610px;margin:0 0 12px;
+    }
+
+    .stats{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:7px 0 12px;
+      padding:6px;
+      background:#bdbdbd;
+      border-top:2px solid #808080;border-left:2px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    }
+    .stat{
+      min-width:0;
+      background:var(--counter-bg);
+      border-top:2px solid #404040;border-left:2px solid #404040;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      padding:5px 5px 4px;text-align:center;border-radius:0;
+    }
+    .stat b{
+      display:block;
+      color:var(--counter);
+      font:700 19px/1 "Courier New",monospace;
+      letter-spacing:1px;
+      text-shadow:0 0 3px rgba(255,0,0,.45);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .stat span{
+      display:block;color:#bdbdbd;font-size:9px;text-transform:uppercase;letter-spacing:.04em;margin-top:3px;
+      font-family:Tahoma,sans-serif;
+    }
+
+    .mini,.primary,.tab,.perk,.upgrade,.draftchoice,.cell{
+      border-radius:0;
+      cursor:pointer;
+    }
+    .mini,.primary,.tab{
+      background:var(--win);
+      color:#000;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+      box-shadow:inset -1px -1px 0 #808080,inset 1px 1px 0 #dfdfdf;
+      padding:6px 10px;
+      font-weight:normal;
+    }
+    .mini:active,.primary:active,.tab:active,.mini.active{
+      border-top:2px solid #000;border-left:2px solid #000;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      box-shadow:inset 1px 1px 0 #808080;
+      padding:7px 9px 5px 11px;
+    }
+    .mini:disabled{color:#777;text-shadow:1px 1px #fff}
+    .primary{
+      width:auto;min-width:120px;
+      font-weight:bold;font-size:12px;letter-spacing:0;text-transform:none;
+    }
+    .dangerbtn{color:#700;background:#c0c0c0;border-color:#fff #000 #000 #fff}
+
+    .modebar{
+      display:flex;gap:4px;margin:8px 0 6px;
+      padding:4px;background:#bdbdbd;
+      border-top:2px solid #808080;border-left:2px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    }
+    .modebar button{flex:1}
+    .modebar .active{
+      background:#ddd;color:#000;
+      border-top:2px solid #000;border-left:2px solid #000;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    }
+
+    .board-wrap{
+      overflow:auto;
+      padding:7px;
+      display:flex;
+      justify-content:center;
+      background:#bdbdbd;
+      border-top:3px solid #808080;border-left:3px solid #808080;border-right:3px solid #fff;border-bottom:3px solid #fff;
+    }
+    .board{display:grid;gap:0;touch-action:manipulation;user-select:none}
+    .cell{
+      width:30px;height:30px;display:grid;place-items:center;
+      background:#c0c0c0;color:#000;font:bold 15px/1 "Courier New",monospace;
+      border-top:3px solid #fff;border-left:3px solid #fff;border-right:3px solid #808080;border-bottom:3px solid #808080;
+      box-shadow:none;
+    }
+    .cell:active:not(.open){
+      border-top:1px solid #808080;border-left:1px solid #808080;border-right:1px solid #c0c0c0;border-bottom:1px solid #c0c0c0;
+    }
+    .cell.open{
+      background:#c0c0c0;
+      border:1px solid #808080;
+      box-shadow:none;
+    }
+    .cell.mine{background:#ff2e2e;border:1px solid #808080;color:#000}
+    .cell.flag{color:#d00000}
+    .cell.hint{outline:2px dotted #000080;outline-offset:-4px}
+    .n1{color:#0000ff}.n2{color:#008000}.n3{color:#ff0000}.n4{color:#000080}
+    .n5{color:#800000}.n6{color:#008080}.n7{color:#000}.n8{color:#808080}
+
+    .notice{min-height:17px;text-align:left;font-size:11px;margin-top:6px;color:#000080}
+    .modifier{
+      margin:0 0 10px;
+      padding:6px 8px;
+      background:#ffffe1;color:#000;
+      border:1px solid #000;
+      box-shadow:2px 2px 0 #808080;
+      font-size:11px;
+    }
+
+    .perkgrid,.upgradegrid,.draftchoices{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+    }
+    .perk,.upgrade,.draftchoice{
+      position:relative;
+      background:#d6d6d6;color:#000;text-align:left;padding:9px 8px 8px 40px;min-height:92px;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #808080;border-bottom:2px solid #808080;
+      box-shadow:none;
+    }
+    .perk:hover,.upgrade:hover,.draftchoice:hover{outline:1px dotted #000;outline-offset:-5px}
+    .perk:active,.draftchoice:active{
+      border-top:2px solid #808080;border-left:2px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      background:#c7c7c7;
+    }
+    .perk.selected{
+      background:#000080;color:#fff;
+      outline:1px dotted #fff;outline-offset:-5px;
+    }
+    .perk.selected small{color:#e8e8ff}
+    .perk .emoji,.upgrade .emoji,.draftchoice .emoji{
+      position:absolute;left:8px;top:9px;
+      width:25px;height:25px;display:grid;place-items:center;
+      background:#c0c0c0;color:#000;font:bold 12px/1 "Courier New",monospace;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #808080;border-bottom:2px solid #808080;
+      font-size:0;
+    }
+    .perk .emoji::after,.upgrade .emoji::after,.draftchoice .emoji::after{font-size:12px}
+    .perk b,.upgrade b,.draftchoice b{display:block;margin:0 0 5px;font-size:12px}
+    .perk small,.upgrade small,.draftchoice span{display:block;color:#333;font-size:11px;line-height:1.3;min-height:0}
+    .cost{margin-top:7px;color:#000080;font-weight:bold;font-size:11px}
+
+    /* compact faux-icons based on card text */
+    .perk .emoji::after,.upgrade .emoji::after,.draftchoice .emoji::after{content:"*"}
+    [data-starter="patch"] .emoji::after{content:"+"}
+    [data-starter="lucky"] .emoji::after{content:"$"}
+    [data-starter="tactician"] .emoji::after{content:"R"}
+    [data-perk="foam"] .emoji::after{content:"F"}
+    [data-perk="cascade"] .emoji::after{content:"C"}
+    [data-perk="adrenaline"] .emoji::after{content:"!"}
+    [data-perk="bounty"] .emoji::after{content:"B"}
+    [data-perk="sight"] .emoji::after{content:"?"}
+    [data-perk="marked"] .emoji::after{content:"M"}
+    [data-perk="medic"] .emoji::after{content:"+"}
+    [data-perk="jackpot"] .emoji::after{content:"2x"}
+    [data-perk="momentum"] .emoji::after{content:">>"}
+    [data-perk="salvage"] .emoji::after{content:"$"}
+    [data-perk="shield"] .emoji::after{content:"S"}
+    [data-perk="scanner"] .emoji::after{content:"SC"}
+    [data-upgrade="pouch"] .emoji::after{content:"$"}
+    [data-upgrade="vest"] .emoji::after{content:"+"}
+    [data-upgrade="survey"] .emoji::after{content:"MAP"}
+    [data-upgrade="battery"] .emoji::after{content:"BAT"}
+
+    .pill{
+      background:#fff;color:#000;border:1px solid #808080;padding:3px 6px;border-radius:0;font-size:11px;
+    }
+    .log{
+      max-height:165px;overflow:auto;
+      padding:5px;background:#fff;color:#000;font:11px/1.45 "Courier New",monospace;
+      border-top:2px solid #808080;border-left:2px solid #808080;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    }
+    .log div{border-bottom:1px dotted #bbb;padding:2px 0}
+    .hidden{display:none!important}
+
+    .draft{
+      position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:20;padding:18px 10px;display:none;overflow:auto;
+    }
+    .draft.show{display:grid;place-items:center}
+    .draftbox{
+      width:min(720px,100%);
+      background:var(--win);padding:34px 8px 8px;
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+      box-shadow:3px 3px 0 rgba(0,0,0,.45);
+    }
+    .draftbox:before{
+      content:"MINEBOUND.EXE - Select Perk";
+      position:absolute;top:3px;left:3px;right:3px;height:24px;
+      background:linear-gradient(90deg,var(--blue),var(--blue2));
+      color:#fff;font-weight:bold;display:flex;align-items:center;padding:0 6px;
+    }
+    .draftbox h2{font-size:13px;margin:0 0 4px;text-align:left}
+    .draftbox>p{margin:0 0 10px;color:#222;text-align:left;font-size:11px}
+
+    .tabs{
+      position:fixed;left:0;right:0;bottom:0;z-index:10;
+      display:flex;gap:3px;justify-content:flex-start;
+      padding:4px 5px calc(4px + env(safe-area-inset-bottom));
+      background:var(--win);
+      border-top:2px solid #fff;
+      box-shadow:0 -1px 0 #808080;
+    }
+    .tabs:before{
+      content:"Start";
+      min-width:56px;
+      display:flex;align-items:center;
+      padding:4px 8px 4px 23px;
+      font-weight:bold;
+      background:
+        linear-gradient(135deg,#f00 0 25%,#0a0 25% 50%,#00f 50% 75%,#ff0 75%) 5px 50%/14px 14px no-repeat,
+        var(--win);
+      border-top:2px solid #fff;border-left:2px solid #fff;border-right:2px solid #000;border-bottom:2px solid #000;
+    }
+    .tab{
+      flex:0 1 145px;max-width:none;text-align:left;padding:5px 8px;background:var(--win);color:#000;
+      font-size:11px;text-transform:none;letter-spacing:0;font-weight:normal;
+    }
+    .tab.active{
+      font-weight:bold;background:#e8e8e8;
+      border-top:2px solid #000;border-left:2px solid #000;border-right:2px solid #fff;border-bottom:2px solid #fff;
+      box-shadow:inset 1px 1px #808080;
+    }
+
+    /* subtle anomaly corruption */
+    body[data-anomaly="dense"] .top{background:linear-gradient(90deg,#000080 0 46%,#2d0d5e 47% 51%,#1084d0 52%)}
+    body[data-anomaly="fragile"] .top{background:linear-gradient(90deg,#800000,#d04040)}
+    body[data-anomaly="noflags"] .top{background:repeating-linear-gradient(90deg,#000080 0 18px,#0019aa 18px 21px,#000080 21px 37px)}
+    body[data-anomaly="rich"] .currency{color:#ffff00;text-shadow:0 0 3px rgba(255,255,0,.5)}
+
+    @media(max-width:690px){
+      html,body{font-size:11px}
+      .app{width:calc(100% - 6px);margin:3px auto 72px}
+      .sub{display:none}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .perkgrid,.upgradegrid,.draftchoices{grid-template-columns:1fr}
+      .cell{width:32px;height:32px}
+      .homehero{padding-left:78px}
+      .tabs:before{min-width:47px;padding-left:20px}
+      .tab{flex:1;text-align:center;padding-left:3px;padding-right:3px}
+    }
+    @media(max-width:390px){
+      .cell{width:29px;height:29px;font-size:14px}
+      .currency{min-width:76px;font-size:12px}
+      .window-controls i{width:16px;height:16px}
+    }
   </style>
+
+
 </head>
 <body>
 <div class="app">
   <div class="top">
-    <div><h1>MINEBOUND</h1><div class="sub">an endless minesweeper roguelike</div></div>
-    <div class="currency">✦ <span id="echoesTop">0</span></div>
+    <div class="title-left">
+      <span class="app-icon" aria-hidden="true"></span>
+      <div class="titlecopy"><h1>MINEBOUND.EXE</h1><span class="sub">Rogue Current Sector Utility v1.0</span></div>
+    </div>
+    <div class="currency"><span id="echoesTop">0</span></div>
+    <div class="window-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></div>
   </div>
 
   <section id="homeScreen" class="screen active">
     <div class="card homehero">
-      <div class="mineicon">💣</div>
-      <h2>Go deeper.</h2>
-      <p>Clear increasingly dangerous minefields, draft strange run perks, survive anomalies, and bring Echoes home to permanently improve future runs.</p>
-      <button class="primary" id="startRunBtn">START RUN</button>
+      <div class="mineicon" aria-hidden="true"></div>
+      <h2>MINEBOUND</h2>
+      <p>An endless minefield program with persistent upgrades. Clear sectors, survive damaged boards, and return with Echoes before your integrity reaches zero.</p>
+      <button class="primary" id="startRunBtn">New Game</button>
       <div class="notice" id="homeNotice"></div>
     </div>
 
     <div class="card" style="margin-top:12px">
-      <div class="section-title">Choose a starting perk</div>
+      <div class="section-title">Run Configuration</div>
       <div class="perkgrid" id="starterPerks"></div>
     </div>
 
     <div class="card" style="margin-top:12px">
-      <div class="section-title">Best Run</div>
+      <div class="section-title">Player File</div>
       <div class="stats">
         <div class="stat"><b id="bestFloor">0</b><span>Best Floor</span></div>
         <div class="stat"><b id="totalRuns">0</b><span>Runs</span></div>
@@ -124,44 +454,44 @@
     <div class="card">
       <div class="row wrap">
         <div>
-          <div class="section-title" style="margin:0">Minefield <span id="sizeLabel" class="muted"></span></div>
+          <div class="section-title" style="margin:0">Current Sector <span id="sizeLabel" class="muted"></span></div>
           <div class="muted" style="font-size:12px"><span id="minesLabel"></span> mines · <span id="safeLeftLabel"></span> safe tiles left</div>
         </div>
         <div class="row">
-          <button class="mini" id="scanBtn">🔎 Scan</button>
-          <button class="mini" id="retreatBtn">Retreat</button>
+          <button class="mini" id="scanBtn">Scan</button>
+          <button class="mini" id="retreatBtn">Exit Run</button>
         </div>
       </div>
       <div class="modebar">
-        <button class="mini active" id="revealModeBtn">👆 Reveal</button>
-        <button class="mini" id="flagModeBtn">🚩 Flag</button>
+        <button class="mini active" id="revealModeBtn">Open</button>
+        <button class="mini" id="flagModeBtn">Mark</button>
       </div>
       <div class="board-wrap"><div id="board" class="board"></div></div>
       <div class="notice" id="runNotice"></div>
     </div>
 
     <div class="card" style="margin-top:12px">
-      <div class="row"><div class="section-title" style="margin:0">Run Perks</div><div class="pill" id="flawlessPill">Flawless x0</div></div>
+      <div class="row"><div class="section-title" style="margin:0">Installed Perks</div><div class="pill" id="flawlessPill">Flawless x0</div></div>
       <div id="runPerkList" class="muted" style="font-size:13px;line-height:1.65;margin-top:8px">None yet.</div>
     </div>
 
     <div class="card" style="margin-top:12px">
-      <div class="section-title">Run Log</div>
+      <div class="section-title">MINEBOUND.LOG</div>
       <div class="log" id="runLog"></div>
     </div>
   </section>
 
   <section id="upgradesScreen" class="screen">
     <div class="card">
-      <div class="section-title">Permanent Upgrades</div>
-      <div class="muted" style="font-size:13px;margin-bottom:10px">Bought with Echoes. These apply to every future run.</div>
+      <div class="section-title">Control Panel / Permanent Upgrades</div>
+      <div class="muted" style="font-size:13px;margin-bottom:10px">Install permanent modules using banked Echoes.</div>
       <div class="upgradegrid" id="upgradeGrid"></div>
     </div>
   </section>
 
   <section id="recordsScreen" class="screen">
     <div class="card">
-      <div class="section-title">Records</div>
+      <div class="section-title">Statistics</div>
       <div class="stats">
         <div class="stat"><b id="recordBestFloor">0</b><span>Best Floor</span></div>
         <div class="stat"><b id="recordRuns">0</b><span>Runs</span></div>
@@ -172,29 +502,29 @@
       <div class="section-title">Save Backup</div>
       <p class="muted" style="font-size:13px;margin-top:0">Your main save lives locally on this device. Export a backup before clearing Safari data, changing domains, or moving phones.</p>
       <div class="row">
-        <button class="mini" id="exportBtn" style="flex:1">Export Save</button>
-        <button class="mini" id="importBtn" style="flex:1">Import Save</button>
+        <button class="mini" id="exportBtn" style="flex:1">Save Backup...</button>
+        <button class="mini" id="importBtn" style="flex:1">Restore Backup...</button>
       </div>
       <input id="importInput" type="file" accept=".json,application/json" hidden />
       <div class="notice" id="saveNotice"></div>
-      <button class="mini dangerbtn" id="wipeBtn" style="width:100%;margin-top:10px">Erase All Progress</button>
+      <button class="mini dangerbtn" id="wipeBtn" style="width:100%;margin-top:10px">Delete Player Data...</button>
     </div>
   </section>
 </div>
 
 <div class="tabs">
-  <button class="tab active" data-tab="homeScreen">🏠 Home</button>
-  <button class="tab" data-tab="runScreen">💣 Run</button>
-  <button class="tab" data-tab="upgradesScreen">⬆️ Upgrades</button>
-  <button class="tab" data-tab="recordsScreen">📊 Records</button>
+  <button class="tab active" data-tab="homeScreen">Home</button>
+  <button class="tab" data-tab="runScreen">Run</button>
+  <button class="tab" data-tab="upgradesScreen">Upgrades</button>
+  <button class="tab" data-tab="recordsScreen">Records</button>
 </div>
 
 <div id="draftOverlay" class="draft">
   <div class="draftbox card">
-    <h2>Choose a mutation</h2>
-    <p>Pick one. These perks last only for this run.</p>
+    <h2>MINEBOUND found new hardware</h2>
+    <p>Choose one module to install for the current run.</p>
     <div class="draftchoices" id="draftChoices"></div>
-    <button class="mini hidden" id="rerollBtn" style="width:100%;margin-top:10px">↻ Reroll choices (<span id="rerollCount">0</span>)</button>
+    <button class="mini hidden" id="rerollBtn" style="width:100%;margin-top:10px">Refresh List (<span id="rerollCount">0</span>)</button>
   </div>
 </div>
 
@@ -202,31 +532,31 @@
 const SAVE_KEY="minebound-save-v1";
 
 const STARTERS=[
-  {id:"patch",emoji:"🩹",name:"Patch Kit",desc:"+1 max Integrity for the entire run."},
-  {id:"lucky",emoji:"🍀",name:"Lucky Charm",desc:"+20% Echoes earned during this run."},
-  {id:"tactician",emoji:"🧠",name:"Tactician",desc:"Start each run with 2 perk-draft rerolls."}
+  {id:"patch",emoji:"+",name:"Patch Kit",desc:"+1 max Integrity for the entire run."},
+  {id:"lucky",emoji:"$",name:"Lucky Charm",desc:"+20% Echoes earned during this run."},
+  {id:"tactician",emoji:"R",name:"Tactician",desc:"Start each run with 2 perk-draft rerolls."}
 ];
 
 const PERKS=[
-  {id:"foam",emoji:"🫧",name:"Defusal Foam",desc:"The first mine you hit on each floor deals no damage."},
-  {id:"cascade",emoji:"🌊",name:"Cascade",desc:"The first zero you reveal each floor also opens 2 random safe tiles."},
-  {id:"adrenaline",emoji:"⚡",name:"Adrenaline",desc:"After taking mine damage, reveal 3 random safe tiles."},
-  {id:"bounty",emoji:"🎯",name:"Clean Sweep",desc:"Flawless floor clears award +35% Echoes."},
-  {id:"sight",emoji:"👁️",name:"Echo Sight",desc:"Every 10 safe tiles opened, mark a guaranteed safe tile with a glow."},
-  {id:"marked",emoji:"🚩",name:"Inside Information",desc:"Each new floor begins with 1 mine correctly flagged."},
-  {id:"medic",emoji:"❤️",name:"Reconstructor",desc:"Heal 1 Integrity after every 3 floors you clear."},
-  {id:"jackpot",emoji:"🎰",name:"Resonance",desc:"20% chance for any cleared floor to pay double Echoes."},
-  {id:"momentum",emoji:"🔥",name:"Momentum",desc:"Each consecutive flawless clear adds +10% reward, up to +50%."},
-  {id:"salvage",emoji:"🧲",name:"Scrap Magnet",desc:"+15% Echoes from every floor for the rest of this run."},
-  {id:"shield",emoji:"🛡️",name:"Reactive Plating",desc:"Every 4th floor cleared grants a one-hit shield for the next floor."},
-  {id:"scanner",emoji:"📡",name:"Deep Scan",desc:"Every floor starts with +1 Scan charge."}
+  {id:"foam",emoji:"F",name:"Defusal Foam",desc:"The first mine you hit on each floor deals no damage."},
+  {id:"cascade",emoji:"C",name:"Cascade",desc:"The first zero you reveal each floor also opens 2 random safe tiles."},
+  {id:"adrenaline",emoji:"!",name:"Adrenaline",desc:"After taking mine damage, reveal 3 random safe tiles."},
+  {id:"bounty",emoji:"B",name:"Clean Sweep",desc:"Flawless floor clears award +35% Echoes."},
+  {id:"sight",emoji:"?",name:"Echo Sight",desc:"Every 10 safe tiles opened, mark a guaranteed safe tile with a glow."},
+  {id:"marked",emoji:"M",name:"Inside Information",desc:"Each new floor begins with 1 mine correctly flagged."},
+  {id:"medic",emoji:"+",name:"Reconstructor",desc:"Heal 1 Integrity after every 3 floors you clear."},
+  {id:"jackpot",emoji:"2x",name:"Resonance",desc:"20% chance for any cleared floor to pay double Echoes."},
+  {id:"momentum",emoji:">>",name:"Momentum",desc:"Each consecutive flawless clear adds +10% reward, up to +50%."},
+  {id:"salvage",emoji:"$",name:"Scrap Magnet",desc:"+15% Echoes from every floor for the rest of this run."},
+  {id:"shield",emoji:"S",name:"Reactive Plating",desc:"Every 4th floor cleared grants a one-hit shield for the next floor."},
+  {id:"scanner",emoji:"SC",name:"Deep Scan",desc:"Every floor starts with +1 Scan charge."}
 ];
 
 const UPGRADES=[
-  {id:"pouch",emoji:"💰",name:"Resonant Pouch",desc:"+10% Echoes earned per rank.",base:40,max:5},
-  {id:"vest",emoji:"🦺",name:"Reinforced Vest",desc:"+1 max Integrity per rank.",base:90,max:2},
-  {id:"survey",emoji:"🗺️",name:"Survey Training",desc:"Auto-reveal 1 safe tile at floor start per rank.",base:70,max:3},
-  {id:"battery",emoji:"🔋",name:"Scanner Battery",desc:"+1 Scan charge on every floor per rank.",base:110,max:2}
+  {id:"pouch",emoji:"$",name:"Resonant Pouch",desc:"+10% Echoes earned per rank.",base:40,max:5},
+  {id:"vest",emoji:"+",name:"Reinforced Vest",desc:"+1 max Integrity per rank.",base:90,max:2},
+  {id:"survey",emoji:"MAP",name:"Survey Training",desc:"Auto-reveal 1 safe tile at floor start per rank.",base:70,max:3},
+  {id:"battery",emoji:"BAT",name:"Scanner Battery",desc:"+1 Scan charge on every floor per rank.",base:110,max:2}
 ];
 
 const defaultMeta={
@@ -301,7 +631,7 @@ function startRun(){
   meta.run={
     floor:1,hp:maxHp,maxHp:maxHp,runEchoes:0,perks:[],starter,
     rerolls:starter==="tactician"?2:0,flawlessStreak:0,
-    board:null,ended:false,log:["Run started."],shield:0
+    board:null,ended:false,log:["MINEBOUND.EXE started."],shield:0
   };
   newFloor();
   save();showScreen("runScreen");
@@ -317,7 +647,7 @@ function currentModifier(){
   const types=[
     {id:"dense",name:"Dense Vein",desc:"+25% mines · +80% Echoes",reward:1.8},
     {id:"fragile",name:"Fragile Hull",desc:"Mine hits deal 2 Integrity · +100% Echoes",reward:2.0},
-    {id:"noflags",name:"Signal Jam",desc:"Flags disabled · +75% Echoes",reward:1.75},
+    {id:"noflags",name:"Signal Jam",desc:"Marks disabled · +75% Echoes",reward:1.75},
     {id:"rich",name:"Rich Seam",desc:"Normal field · double Echoes",reward:2.0}
   ];
   const seed=(meta.run.floor*9301+49297)%233280;
@@ -408,7 +738,7 @@ function hitMine(idx){
   if(r.hp<=0){endRun("Hull failure.");return}
   save();renderAll();
 }
-function toggleFlag(idx){
+function toggleMark(idx){
   const b=meta.run.board;if(!b.generated)return;
   const mod=currentModifier();if(mod&&mod.id==="noflags")return;
   const c=b.cells[idx];if(c.open)return;
@@ -431,7 +761,7 @@ function markSafeHint(){
 }
 function useScan(){
   const b=meta.run.board;if(!b||!b.generated||b.scans<=0)return;
-  if(openRandomSafe()){b.scans--;meta.run.log.unshift("Scanner located a safe tile.");save();renderAll()}
+  if(openRandomSafe()){b.scans--;meta.run.log.unshift("SCAN.EXE located a safe tile.");save();renderAll()}
 }
 function floorReward(){
   const r=meta.run,b=r.board;
@@ -484,7 +814,7 @@ function choosePerk(id){
 }
 function retreat(){
   if(!meta.run||meta.run.ended)return;
-  if(confirm("Retreat and bank your current Echoes?"))endRun("Retreated safely.");
+  if(confirm("Exit Run and bank your current Echoes?"))endRun("Exit Runed safely.");
 }
 function endRun(reason){
   const r=meta.run;if(!r||r.ended)return;
@@ -492,11 +822,11 @@ function endRun(reason){
   meta.echoes+=r.runEchoes;meta.lifetimeEchoes+=r.runEchoes;
   r.log.unshift(`${reason} Banked ${r.runEchoes} Echoes.`);
   save();renderAll();
-  $("runNotice").textContent=`Run over — banked ${r.runEchoes} Echoes.`;
+  $("runNotice").textContent=`PROCESS ENDED — banked ${r.runEchoes} Echoes.`;
 }
 function clickCell(idx){
   if(!meta.run||meta.run.ended)return;
-  mode==="flag"?toggleFlag(idx):reveal(idx,true);
+  mode==="flag"?toggleMark(idx):reveal(idx,true);
 }
 function renderBoard(){
   const r=meta.run,b=r&&r.board;
@@ -506,17 +836,17 @@ function renderBoard(){
     let txt="",cls="cell";
     if(c.open){
       cls+=" open";
-      if(c.mine){txt="💥";cls+=" mine"}
+      if(c.mine){txt="*";cls+=" mine"}
       else if(c.n){txt=c.n;cls+=` n${c.n}`}
-    }else if(c.flag){txt="🚩";cls+=" flag"}
+    }else if(c.flag){txt="P";cls+=" flag"}
     if(b.hintIndex===i&&!c.open)cls+=" hint";
     return `<button class="${cls}" data-cell="${i}" aria-label="cell">${txt}</button>`
   }).join("");
   document.querySelectorAll("[data-cell]").forEach(el=>{
     const idx=+el.dataset.cell;
     el.onclick=()=>clickCell(idx);
-    el.oncontextmenu=e=>{e.preventDefault();toggleFlag(idx)};
-    el.ontouchstart=()=>{pressTimer=setTimeout(()=>{toggleFlag(idx);pressTimer=null},520)};
+    el.oncontextmenu=e=>{e.preventDefault();toggleMark(idx)};
+    el.ontouchstart=()=>{pressTimer=setTimeout(()=>{toggleMark(idx);pressTimer=null},520)};
     el.ontouchend=()=>{if(pressTimer){clearTimeout(pressTimer);pressTimer=null}};
     el.ontouchmove=()=>{if(pressTimer){clearTimeout(pressTimer);pressTimer=null}};
   });
@@ -524,11 +854,13 @@ function renderBoard(){
 function renderRun(){
   const r=meta.run;
   if(!r){
+    document.body.dataset.anomaly="";
     $("floorStat").textContent="-";$("hpStat").textContent="-";$("scanStat").textContent="-";$("runEchoStat").textContent="0";
     $("runNotice").textContent="Start a run from Home.";renderBoard();return;
   }
   const b=r.board,mod=currentModifier();
-  $("floorStat").textContent=r.floor;$("hpStat").textContent=`${Math.max(0,r.hp)}/${r.maxHp}${r.shield?` +🛡${r.shield}`:""}`;
+  document.body.dataset.anomaly=mod?mod.id:"";
+  $("floorStat").textContent=r.floor;$("hpStat").textContent=`${Math.max(0,r.hp)}/${r.maxHp}${r.shield?` +S${r.shield}`:""}`;
   $("scanStat").textContent=b?b.scans:0;$("runEchoStat").textContent=r.runEchoes;
   $("sizeLabel").textContent=b?`${b.rows}×${b.cols}`:"";$("minesLabel").textContent=b?b.mines:0;
   $("safeLeftLabel").textContent=b?(b.cells.length-b.mines-b.opened):0;
@@ -537,7 +869,7 @@ function renderRun(){
   $("modifierBox").classList.toggle("hidden",!mod);
   $("modifierBox").textContent=mod?`⚠ ${mod.name}: ${mod.desc}`:"";
   $("flawlessPill").textContent=`Flawless x${r.flawlessStreak}`;
-  $("runPerkList").textContent=r.perks.length?r.perks.map(p=>`${p.emoji} ${p.name}`).join(" · "):"None yet.";
+  $("runPerkList").textContent=r.perks.length?r.perks.map(p=>`[${p.emoji}] ${p.name}`).join("   "):"No modules installed.";
   $("runLog").innerHTML=r.log.map(x=>`<div>${x}</div>`).join("");
   if(r.ended)$("runNotice").textContent=`Run ended. ${r.runEchoes} Echoes were banked.`;
   renderBoard();
